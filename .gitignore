@@ -1,0 +1,47 @@
+# class files
+*.class
+/bin
+/bin/*
+/out
+**/out/
+
+# error logs
+hs_err_pid*
+
+# ide files
+/target
+*.iml
+*.project
+*.classpath
+.idea/*
+build/*
+build
+rebel.xml
+rebel-remote.xml
+
+# player saves
+/data/saves/characters/*
+
+# maps
+*.os
+
+# archives
+*.rar
+
+### Gradle ###
+.gradle
+/build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache
+/gradle/
+gradlew
+gradlew.bat
+
+*.lock
