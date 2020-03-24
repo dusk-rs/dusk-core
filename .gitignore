@@ -19,17 +19,9 @@ build
 rebel.xml
 rebel-remote.xml
 
-# player saves
-/data/saves/characters/*
-
-# maps
-*.os
-
-# archives
-*.rar
-
 ### Gradle ###
 .gradle
+gradle.properties
 /build/
 
 # Ignore Gradle GUI config
