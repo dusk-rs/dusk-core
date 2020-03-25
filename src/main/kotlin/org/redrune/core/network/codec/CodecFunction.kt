@@ -1,4 +1,4 @@
-package org.redrune.core.network.model.codec
+package org.redrune.core.network.codec
 
 import org.redrune.core.network.model.message.Message
 import org.redrune.core.network.model.message.codec.MessageDecoder

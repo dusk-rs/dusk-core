@@ -5,7 +5,7 @@ import io.netty.buffer.ByteBuf
 import io.netty.channel.ChannelHandler
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.MessageToByteEncoder
-import org.redrune.core.network.model.codec.Codec
+import org.redrune.core.network.codec.Codec
 import org.redrune.core.network.model.message.Message
 import org.redrune.core.network.model.message.codec.MessageEncoder
 import org.redrune.core.network.model.packet.access.PacketBuilder

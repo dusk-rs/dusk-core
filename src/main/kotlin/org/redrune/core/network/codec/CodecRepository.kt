@@ -1,4 +1,4 @@
-package org.redrune.core.network.model.codec
+package org.redrune.core.network.codec
 
 import com.github.michaelbull.logging.InlineLogger
 import org.redrune.core.tools.function.FileFunction

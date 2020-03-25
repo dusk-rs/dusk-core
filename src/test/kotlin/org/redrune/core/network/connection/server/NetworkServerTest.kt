@@ -1,7 +1,7 @@
 package org.redrune.core.network.connection.server
 
 import org.redrune.core.network.connection.ConnectionSettings
-import org.redrune.core.network.model.codec.NetworkPipeline
+import org.redrune.core.network.connection.ConnectionPipeline
 
 /**
  * @author Tyluur <contact@kiaira.tech>
@@ -12,7 +12,7 @@ fun main() {
     val server = NetworkServer(settings)
 //    val config = SslConfig("./", "", "") ?: throw IllegalStateException("Unable to create ssl configuration")
 //    val sslInitializer = SslServerInitializer(config)
-    val pipeline = NetworkPipeline().apply {
+    val pipeline = ConnectionPipeline {
 
     }
     server.configure(pipeline)

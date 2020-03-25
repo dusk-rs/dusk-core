@@ -4,7 +4,7 @@ import com.github.michaelbull.logging.InlineLogger
 import io.netty.channel.ChannelHandler
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.MessageToMessageDecoder
-import org.redrune.core.network.model.codec.Codec
+import org.redrune.core.network.codec.Codec
 import org.redrune.core.network.model.packet.access.PacketReader
 
 /**

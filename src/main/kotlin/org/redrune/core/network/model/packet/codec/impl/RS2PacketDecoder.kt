@@ -2,7 +2,7 @@ package org.redrune.core.network.model.packet.codec.impl
 
 import com.github.michaelbull.logging.InlineLogger
 import io.netty.buffer.ByteBuf
-import org.redrune.core.network.model.codec.Codec
+import org.redrune.core.network.codec.Codec
 import org.redrune.core.network.model.packet.codec.PacketDecoder
 import org.redrune.core.tools.crypto.IsaacCipher
 

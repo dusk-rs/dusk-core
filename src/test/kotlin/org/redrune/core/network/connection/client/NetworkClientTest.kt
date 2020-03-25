@@ -1,7 +1,10 @@
 package org.redrune.core.network.connection.client
 
+import io.netty.channel.ChannelInitializer
+import io.netty.channel.socket.SocketChannel
+import org.redrune.core.network.connection.ConnectionPipeline
 import org.redrune.core.network.connection.ConnectionSettings
-import org.redrune.core.network.model.codec.NetworkPipeline
+import org.redrune.core.network.connection.ReconnectionAdapter
 
 /**
  * @author Tyluur <contact@kiaira.tech>
@@ -10,9 +13,9 @@ import org.redrune.core.network.model.codec.NetworkPipeline
 fun main() {
     val settings = ConnectionSettings("127.0.0.1", 43593)
     val client = NetworkClient(settings)
-    val pipeline = NetworkPipeline()
-
-    pipeline.addConnectionListener(client, 10_000, 5)
+    val pipeline = ConnectionPipeline {
+        it.addLast("connection.listener", ReconnectionAdapter(client, 10_000L, 5))
+    }
     client.configure(pipeline)
     client.start()
 
