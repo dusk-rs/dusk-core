@@ -1,11 +1,5 @@
-import com.jfrog.bintray.gradle.BintrayExtension.PackageConfig
-import com.jfrog.bintray.gradle.BintrayExtension.VersionConfig
-import org.gradle.api.publish.maven.MavenPom
-import java.util.*
-
 plugins {
     kotlin("jvm") version "1.3.61"
-    id("com.jfrog.bintray") version "1.8.4"
     `maven-publish`
     maven
     idea
@@ -15,13 +9,10 @@ plugins {
 group = "redrune-network-core"
 version = "0.0.1"
 
-val bintrayUser: String? by project
-val bintrayKey: String? by project
-val versionName = version.toString()
-
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
+    mavenLocal()
     mavenCentral()
     jcenter()
     maven(url = "https://repo.maven.apache.org/maven2")
@@ -49,60 +40,26 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.2")
 }
 
-val sourcesJar by tasks.creating(Jar::class) {
-    from(sourceSets.getByName("main").java.srcDirs)
+
+val sourcesJar by tasks.registering(Jar::class) {
     archiveClassifier.set("sources")
+    from(sourceSets.getByName("main").java.srcDirs)
 }
 
 artifacts {
-    archives(sourcesJar)
+    archives(sourcesJar.get())
 }
-
-fun MavenPom.addDependencies() = withXml {
-    asNode().appendNode("dependencies").let { depNode ->
-        configurations.compile.get().allDependencies.forEach {
-            depNode.appendNode("dependency").apply {
-                appendNode("groupId", it.group)
-                appendNode("artifactId", it.name)
-                appendNode("version", it.version)
-            }
-        }
-    }
-}
-
 
 publishing {
+    repositories {
+        mavenLocal()
+    }
     publications {
-        create("production", MavenPublication::class) {
-            artifact("$buildDir/outputs/aar/app-release.aar")
-            groupId
-            artifactId = "redrune-network-core"
-            version = versionName
-            pom.addDependencies()
+        register("mavenJava", MavenPublication::class) {
+            from(components["java"])
+            artifact(sourcesJar.get())
         }
     }
-}
-
-bintray {
-    user = bintrayUser
-    key = bintrayKey
-    setConfigurations("archives")
-    publish = true
-    pkg(delegateClosureOf<PackageConfig> {
-        repo = "redrune-rsps"
-        name = "redrune-network-core"
-        userOrg = "redrune"
-        vcsUrl = "https://gitlab.com/redrune-rsps/core/network.git"
-        setLabels("kotlin")
-        setLicenses("BSD 3-Clause")
-        publicDownloadNumbers = true
-        version(delegateClosureOf<VersionConfig> {
-            name = versionName
-            desc = "The RedRune network is maintained at its core within this project."
-            released = Date().toString()
-            vcsTag = "v$versionName"
-        })
-    })
 }
 
 tasks {
