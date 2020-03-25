@@ -21,7 +21,6 @@ rebel-remote.xml
 
 ### Gradle ###
 .gradle
-gradle.properties
 /build/
 
 # Ignore Gradle GUI config

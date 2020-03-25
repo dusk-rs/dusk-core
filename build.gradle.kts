@@ -6,7 +6,7 @@ plugins {
     java
 }
 
-group = "redrune-network-core"
+group = "redrune-network"
 version = "0.0.3"
 
 java.sourceCompatibility = JavaVersion.VERSION_11
