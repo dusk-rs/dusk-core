@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.3.61"
+    kotlin("jvm") version "1.3.71"
     `maven-publish`
     maven
     idea
@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "org.redrune.core"
-version = "0.0.3"
+version = "0.0.4"
 
 java.sourceCompatibility = JavaVersion.VERSION_11
 

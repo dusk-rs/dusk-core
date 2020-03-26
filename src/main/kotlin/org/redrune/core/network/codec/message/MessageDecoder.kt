@@ -1,8 +1,8 @@
-package org.redrune.core.network.model.message.codec
+package org.redrune.core.network.codec.message
 
 import io.netty.channel.ChannelHandler
 import org.redrune.core.network.model.message.Message
-import org.redrune.core.network.model.packet.access.PacketReader
+import org.redrune.core.network.codec.packet.access.PacketReader
 import java.util.*
 
 /**

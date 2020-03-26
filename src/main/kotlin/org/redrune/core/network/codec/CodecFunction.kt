@@ -1,9 +1,9 @@
 package org.redrune.core.network.codec
 
 import org.redrune.core.network.model.message.Message
-import org.redrune.core.network.model.message.codec.MessageDecoder
-import org.redrune.core.network.model.message.codec.MessageEncoder
-import org.redrune.core.network.model.message.codec.MessageHandler
+import org.redrune.core.network.codec.message.MessageDecoder
+import org.redrune.core.network.codec.message.MessageEncoder
+import org.redrune.core.network.codec.message.MessageHandler
 import kotlin.reflect.KClass
 
 /**

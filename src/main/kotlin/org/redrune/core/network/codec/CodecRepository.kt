@@ -2,9 +2,9 @@ package org.redrune.core.network.codec
 
 import com.github.michaelbull.logging.InlineLogger
 import org.redrune.core.tools.function.FileFunction
-import org.redrune.core.network.model.message.codec.MessageDecoder
-import org.redrune.core.network.model.message.codec.MessageEncoder
-import org.redrune.core.network.model.message.codec.MessageHandler
+import org.redrune.core.network.codec.message.MessageDecoder
+import org.redrune.core.network.codec.message.MessageEncoder
+import org.redrune.core.network.codec.message.MessageHandler
 import org.redrune.core.network.model.packet.PacketMetaData
 import kotlin.reflect.KClass
 

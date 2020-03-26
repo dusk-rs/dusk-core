@@ -1,4 +1,4 @@
-package org.redrune.core.network.model.message.codec.impl
+package org.redrune.core.network.codec.message.encode
 
 import com.github.michaelbull.logging.InlineLogger
 import io.netty.buffer.ByteBuf
@@ -7,17 +7,17 @@ import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.MessageToByteEncoder
 import org.redrune.core.network.codec.Codec
 import org.redrune.core.network.model.message.Message
-import org.redrune.core.network.model.message.codec.MessageEncoder
-import org.redrune.core.network.model.packet.access.PacketBuilder
+import org.redrune.core.network.codec.message.MessageEncoder
+import org.redrune.core.network.codec.packet.access.PacketBuilder
 
 /**
- * Messages that are encoded with the size must use this codec
+ * Messages that are encoded into a byte must use this encoder
  *
  * @author Tyluur <contact@kiaira.tech>
- * @since February 20, 2020
+ * @since February 18, 2020
  */
 @ChannelHandler.Sharable
-class SizedMessageEncoder(private val codec: Codec) : MessageToByteEncoder<Message>() {
+class RawMessageEncoder(private val codec: Codec) : MessageToByteEncoder<Message>() {
 
     private val logger = InlineLogger()
 
@@ -30,7 +30,6 @@ class SizedMessageEncoder(private val codec: Codec) : MessageToByteEncoder<Messa
         }
         val builder = PacketBuilder(buffer = out)
         encoder.encode(builder, msg)
-        builder.writeSize()
         logger.info { "Encoding successful [encoder=${encoder.javaClass.simpleName}, msg=$msg, codec=${codec.javaClass.simpleName}" }
     }
 

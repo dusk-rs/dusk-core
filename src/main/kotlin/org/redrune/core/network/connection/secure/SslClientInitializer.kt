@@ -5,5 +5,4 @@ package org.redrune.core.network.connection.secure
  * @since March 25, 2020
  */
 // TODO - ssl for the client
-class SslClientInitializer {
-}
+class SslClientInitializer

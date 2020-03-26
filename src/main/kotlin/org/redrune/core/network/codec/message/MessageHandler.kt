@@ -1,4 +1,4 @@
-package org.redrune.core.network.model.message.codec
+package org.redrune.core.network.codec.message
 
 import io.netty.channel.ChannelHandler
 import io.netty.channel.ChannelHandlerContext

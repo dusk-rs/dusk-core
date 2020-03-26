@@ -1,4 +1,4 @@
-package org.redrune.core.network.model.packet.codec
+package org.redrune.core.network.codec.packet
 
 /**
  * @author Tyluur <contact@kiaira.tech>

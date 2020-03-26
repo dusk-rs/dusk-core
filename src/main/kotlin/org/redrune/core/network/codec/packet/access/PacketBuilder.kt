@@ -1,4 +1,4 @@
-package org.redrune.core.network.model.packet.access
+package org.redrune.core.network.codec.packet.access
 
 import io.netty.buffer.ByteBuf
 import org.redrune.core.tools.crypto.IsaacCipher

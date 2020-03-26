@@ -1,4 +1,4 @@
-package org.redrune.core.network.model.packet.codec
+package org.redrune.core.network.codec.packet
 
 import com.github.michaelbull.logging.InlineLogger
 import io.netty.buffer.ByteBuf
@@ -6,8 +6,8 @@ import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.ByteToMessageDecoder
 import org.redrune.core.network.model.packet.PacketType
 import org.redrune.core.network.model.packet.PacketType.*
-import org.redrune.core.network.model.packet.access.PacketReader
-import org.redrune.core.network.model.packet.codec.DecoderState.*
+import org.redrune.core.network.codec.packet.access.PacketReader
+import org.redrune.core.network.codec.packet.DecoderState.*
 
 /**
  * @author Tyluur <contact@kiaira.tech>
