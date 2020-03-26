@@ -7,6 +7,7 @@ import java.io.File
  * @since March 18, 2020
  */
 class SslConfig private constructor(
+
     /**
      * The file that has the certification
      */
@@ -34,7 +35,7 @@ class SslConfig private constructor(
             return SslConfig(certificationFile, keyFile, trustCertificationFile)
         }
 
-        private inline fun fileOrNull(fileLocation: String): File? {
+        private fun fileOrNull(fileLocation: String): File? {
             val file = File(fileLocation)
             return if (file.exists()) file else null
         }

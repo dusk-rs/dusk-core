@@ -63,6 +63,13 @@ abstract class CodecRepository {
         }
     }
 
+    protected inline fun <reified T : Codec> registerCodecs() {
+        val encoders = FileFunction.getChildClassesOf<T>()
+        for (clazz in encoders) {
+            (clazz as T).register()
+        }
+    }
+
     protected fun bindDecoder(decoder: MessageDecoder<*>) {
         decoder.opcodes?.forEach { opcode ->
             if (decoders[opcode] != null) {
