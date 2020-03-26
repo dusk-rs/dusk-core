@@ -1,1 +1,1 @@
-rootProject.name = "org.redrune.core"
+rootProject.name = "redrune-network"
