@@ -1,11 +1,11 @@
 package org.redrune.core.network.codec
 
 import com.github.michaelbull.logging.InlineLogger
-import org.redrune.core.tools.function.FileFunction
 import org.redrune.core.network.codec.message.MessageDecoder
 import org.redrune.core.network.codec.message.MessageEncoder
 import org.redrune.core.network.codec.message.MessageHandler
 import org.redrune.core.network.model.packet.PacketMetaData
+import org.redrune.core.tools.function.FileFunction
 import kotlin.reflect.KClass
 
 /**
@@ -60,13 +60,6 @@ abstract class CodecRepository {
             val encoder = clazz as T
             val type: KClass<*> = encoder.getGenericTypeClass()
             bindEncoder(type, encoder)
-        }
-    }
-
-    protected inline fun <reified T : Codec> registerCodecs() {
-        val encoders = FileFunction.getChildClassesOf<T>()
-        for (clazz in encoders) {
-            (clazz as T).register()
         }
     }
 

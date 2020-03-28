@@ -1,10 +1,10 @@
 package org.redrune.core.network.codec
 
 import com.github.michaelbull.logging.InlineLogger
-import org.redrune.core.network.model.message.Message
 import org.redrune.core.network.codec.message.MessageDecoder
 import org.redrune.core.network.codec.message.MessageEncoder
 import org.redrune.core.network.codec.message.MessageHandler
+import org.redrune.core.network.model.message.Message
 import kotlin.reflect.KClass
 
 /**
@@ -12,10 +12,6 @@ import kotlin.reflect.KClass
  * @since February 18, 2020
  */
 abstract class Codec : CodecRepository(), CodecFunction {
-
-    init {
-        register()
-    }
 
     /**
      * The registration of the codec components must be explicitly done here, due to the requirement of type specification

@@ -1,6 +1,7 @@
 package org.redrune.core.tools.function
 
 import io.github.classgraph.ClassGraph
+import org.redrune.core.network.codec.Codec
 
 /**
  * @author Tyluur <contact@kiaira.tech>
@@ -18,6 +19,13 @@ class FileFunction {
             val classes = ArrayList<Any>()
             list?.forEach { classes.add(it.newInstance()) }
             return classes
+        }
+
+        inline fun <reified T : Codec> registerCodecs() {
+            val encoders = getChildClassesOf<T>()
+            for (clazz in encoders) {
+                (clazz as T).register()
+            }
         }
 
     }

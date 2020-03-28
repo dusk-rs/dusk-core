@@ -18,5 +18,4 @@ fun main() {
     }
     client.configure(pipeline)
     client.start()
-
 }
