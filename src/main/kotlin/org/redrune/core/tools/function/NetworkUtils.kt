@@ -21,6 +21,12 @@ class NetworkUtils {
             return classes
         }
 
+        fun loadCodecs(vararg codecs: Codec) {
+            for (codec in codecs) {
+                codec.register()
+                codec.report()
+            }
+        }
     }
 
 }
