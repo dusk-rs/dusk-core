@@ -13,16 +13,12 @@ import kotlin.reflect.KClass
  */
 abstract class Codec : CodecRepository(), CodecFunction {
 
-    /**
-     * The registration of the codec components must be explicitly done here, due to the requirement of type specification
-     */
-    abstract fun register()
-
     private val logger = InlineLogger()
 
-    fun report() {
-        logger.info { "${this.javaClass.simpleName} information - [decoders=${decoders.size}, handlers=${handlers.size}, encoders=${encoders.size}]" }
-    }
+    /**
+     * All components of the codec must be registered with utilization of the functions in [CodecFunction]
+     */
+    abstract fun register()
 
     override fun decoder(opcode: Int): MessageDecoder<*>? {
         return decoders[opcode]
@@ -36,6 +32,10 @@ abstract class Codec : CodecRepository(), CodecFunction {
     @Suppress("UNCHECKED_CAST")
     override fun <M : Message> encoder(clazz: KClass<M>): MessageEncoder<M>? {
         return encoders[clazz] as? MessageEncoder<M>
+    }
+
+    fun report() {
+        logger.info { "${this.javaClass.simpleName} information - [decoders=${decoders.size}, handlers=${handlers.size}, encoders=${encoders.size}]" }
     }
 
 }

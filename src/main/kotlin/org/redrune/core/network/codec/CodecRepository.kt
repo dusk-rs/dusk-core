@@ -1,11 +1,10 @@
 package org.redrune.core.network.codec
 
-import com.github.michaelbull.logging.InlineLogger
 import org.redrune.core.network.codec.message.MessageDecoder
 import org.redrune.core.network.codec.message.MessageEncoder
 import org.redrune.core.network.codec.message.MessageHandler
 import org.redrune.core.network.model.packet.PacketMetaData
-import org.redrune.core.tools.function.FileFunction
+import org.redrune.core.tools.function.NetworkUtils
 import kotlin.reflect.KClass
 
 /**
@@ -14,25 +13,26 @@ import kotlin.reflect.KClass
  */
 abstract class CodecRepository {
 
-    private val logger = InlineLogger()
-
     /**
      * The map of decoders, which are of type D, and are specified by the opcode of the message they are handling
      */
-    protected val decoders = HashMap<Int, MessageDecoder<*>>()
+    @JvmField
+    val decoders = HashMap<Int, MessageDecoder<*>>()
 
     /**
      * The map of handlers, which are specified by the class they are handling (a subclass of [Message])
      */
-    protected val handlers = HashMap<KClass<*>, MessageHandler<*>>()
+    @JvmField
+    val handlers = HashMap<KClass<*>, MessageHandler<*>>()
 
     /**
      * The map of message encoders, which are specified by the class they are handling (a subclass of [Message])
      */
-    protected val encoders = HashMap<KClass<*>, MessageEncoder<*>>()
+    @JvmField
+    val encoders = HashMap<KClass<*>, MessageEncoder<*>>()
 
     protected inline fun <reified T : MessageDecoder<*>> bindDecoders() {
-        val decoders = FileFunction.getChildClassesOf<T>()
+        val decoders = NetworkUtils.getCodecEntry<T>()
         for (clazz in decoders) {
             if (!clazz.javaClass.isAnnotationPresent(PacketMetaData::class.java)) {
                 continue
@@ -46,7 +46,7 @@ abstract class CodecRepository {
     }
 
     protected inline fun <reified T : MessageHandler<*>> bindHandlers() {
-        val handlers = FileFunction.getChildClassesOf<T>()
+        val handlers = NetworkUtils.getCodecEntry<T>()
         for (clazz in handlers) {
             val handler = clazz as T
             val type: KClass<*> = handler.getGenericTypeClass()
@@ -55,7 +55,7 @@ abstract class CodecRepository {
     }
 
     protected inline fun <reified T : MessageEncoder<*>> bindEncoders() {
-        val encoders = FileFunction.getChildClassesOf<T>()
+        val encoders = NetworkUtils.getCodecEntry<T>()
         for (clazz in encoders) {
             val encoder = clazz as T
             val type: KClass<*> = encoder.getGenericTypeClass()
