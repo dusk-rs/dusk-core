@@ -1,6 +1,7 @@
 package org.redrune.core.network.model.session
 
 import io.netty.channel.Channel
+import io.netty.channel.ChannelFuture
 import io.netty.util.AttributeKey
 import java.net.InetSocketAddress
 
@@ -10,8 +11,25 @@ import java.net.InetSocketAddress
  */
 open class Session(private val channel: Channel) {
 
-    fun getHost(): String {
+    /**
+     * The ip address of the channel that connected to the server
+    c   */
+    fun getIp(): String {
+        return (channel.localAddress() as? InetSocketAddress)?.address?.hostAddress ?: "127.0.0.1"
+    }
+
+    /**
+     * The ip address of the server we are connected to
+     */
+    fun getDestinationIp(): String {
         return (channel.remoteAddress() as? InetSocketAddress)?.address?.hostAddress ?: "127.0.0.1"
+    }
+
+    /**
+     * Sending of a message via [Channel.writeAndFlush]
+     */
+    fun send(msg: Any): ChannelFuture? {
+        return channel.writeAndFlush(msg)
     }
 
     companion object {
