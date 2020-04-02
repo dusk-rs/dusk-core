@@ -32,6 +32,14 @@ open class Session(private val channel: Channel) {
         return channel.writeAndFlush(msg)
     }
 
+    /**
+     * Disconnects the channel via [Channel.disconnect]
+     * @return ChannelFuture?
+     */
+    fun disconnect(): ChannelFuture? {
+        return channel.disconnect()
+    }
+
     companion object {
         /**
          * The attribute in the [Channel] that identifies the session

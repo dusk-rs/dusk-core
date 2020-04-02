@@ -16,25 +16,26 @@ abstract class CodecRepository {
     /**
      * The map of decoders, which are of type D, and are specified by the opcode of the message they are handling
      */
-    @JvmField
-    val decoders = HashMap<Int, MessageDecoder<*>>()
+    protected val decoders = HashMap<Int, MessageDecoder<*>>()
 
     /**
      * The map of handlers, which are specified by the class they are handling (a subclass of [Message])
      */
-    @JvmField
-    val handlers = HashMap<KClass<*>, MessageHandler<*>>()
+    protected val handlers = HashMap<KClass<*>, MessageHandler<*>>()
 
     /**
      * The map of message encoders, which are specified by the class they are handling (a subclass of [Message])
      */
-    @JvmField
-    val encoders = HashMap<KClass<*>, MessageEncoder<*>>()
+    protected val encoders = HashMap<KClass<*>, MessageEncoder<*>>()
 
+    /**
+     *
+     */
     protected inline fun <reified T : MessageDecoder<*>> bindDecoders() {
         val decoders = NetworkUtils.getCodecEntry<T>()
         for (clazz in decoders) {
             if (!clazz.javaClass.isAnnotationPresent(PacketMetaData::class.java)) {
+                System.err.println("Unable to register decoder ${clazz.javaClass.name}, no meta data defined!")
                 continue
             }
             val metaData = clazz.javaClass.getDeclaredAnnotation(PacketMetaData::class.java)

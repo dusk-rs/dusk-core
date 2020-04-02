@@ -4,8 +4,8 @@ package org.redrune.core.network.model.packet
  * An enumeration which contains the different types of packets.
  * @since February 18, 2020
  *
- * @author Tyluur <contact@kiaira.tech>
  * @author Graham
+ * @author Tyluur <contact@kiaira.tech>
  */
 enum class PacketType {
 

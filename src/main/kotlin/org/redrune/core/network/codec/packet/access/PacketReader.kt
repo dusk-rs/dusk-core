@@ -20,6 +20,13 @@ class PacketReader(val opcode: Int, private val type: PacketType?, private val b
     private var bitIndex = 0
 
     /**
+     * Reads a byte.
+     */
+    fun readByte(): Int {
+        return readByte(Modifier.NONE)
+    }
+
+    /**
      * Reads a boolean.
      * @param type The variable read type
      * @return [Boolean]
