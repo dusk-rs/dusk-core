@@ -11,12 +11,18 @@ interface ConnectionEvent {
     /**
      * When a channel is registered, this function is called
      */
-    fun onConnect(ctx: ChannelHandlerContext)
+    fun onRegistration(ctx: ChannelHandlerContext)
 
     /**
      * When a channel is unregistered, this function is called
      */
-    fun onDisconnect(ctx: ChannelHandlerContext)
+    fun onDeregistration(ctx: ChannelHandlerContext)
+
+    /**
+     * When the channel h
+     * @param ctx ChannelHandlerContext
+     */
+    fun onActive(ctx: ChannelHandlerContext)
 
     /**
      * When a channel has gone inactive, this function is called

@@ -20,11 +20,15 @@ class NetworkMessageHandler(private val codec: Codec, private val event: Connect
     private val logger = InlineLogger()
 
     override fun channelRegistered(ctx: ChannelHandlerContext) {
-        event.onConnect(ctx)
+        event.onRegistration(ctx)
     }
 
     override fun channelUnregistered(ctx: ChannelHandlerContext) {
-        event.onDisconnect(ctx)
+        event.onDeregistration(ctx)
+    }
+
+    override fun channelActive(ctx: ChannelHandlerContext) {
+        event.onActive(ctx)
     }
 
     override fun channelInactive(ctx: ChannelHandlerContext) {
