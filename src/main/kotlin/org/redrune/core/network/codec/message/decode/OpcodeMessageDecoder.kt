@@ -21,11 +21,11 @@ class OpcodeMessageDecoder(private val codec: Codec) : MessageToMessageDecoder<P
     override fun decode(ctx: ChannelHandlerContext, msg: PacketReader, out: MutableList<Any>) {
         val decoder = codec.decoder(msg.opcode)
         if (decoder == null) {
-            logger.warn { "Unable to find message decoder [msg=$msg, codec=${codec.javaClass.simpleName}]" }
+            logger.warn { "Unable to find message decoder [msg=$msg, codec=${codec.javaClass.simpleName}, codec=$codec]" }
             return
         }
         val message = decoder.decode(msg)
         out.add(message)
-        logger.info { "Message decoding successful [decoder=${decoder.javaClass.simpleName}]"}
+        logger.info { "Message decoding successful [decoder=${decoder.javaClass.simpleName}, codec=$codec]"}
     }
 }

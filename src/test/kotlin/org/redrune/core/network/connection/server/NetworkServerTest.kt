@@ -19,17 +19,21 @@ fun main() {
     val config = SslConfig("./", "", "") ?: throw IllegalStateException("Unable to create ssl configuration")
     val sslInitializer = SslServerInitializer(config) // TODO
     val pipeline = ConnectionPipeline {
-        it.addLast("message.handler", NetworkMessageHandler(object: Codec() {
+        it.addLast("message.handler", NetworkMessageHandler(object : Codec() {
             override fun register() {
                 TODO("Not yet implemented")
             }
 
         }, object : ConnectionEvent {
-            override fun onConnect(ctx: ChannelHandlerContext) {
+            override fun onRegistration(ctx: ChannelHandlerContext) {
                 TODO("Not yet implemented")
             }
 
-            override fun onDisconnect(ctx: ChannelHandlerContext) {
+            override fun onDeregistration(ctx: ChannelHandlerContext) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onActive(ctx: ChannelHandlerContext) {
                 TODO("Not yet implemented")
             }
 

@@ -2,7 +2,10 @@ package org.redrune.core.network.model.session
 
 import io.netty.channel.Channel
 import io.netty.channel.ChannelFuture
+import io.netty.channel.ChannelHandler
+import io.netty.channel.ChannelPipeline
 import io.netty.util.AttributeKey
+import org.redrune.core.tools.utility.replace
 import java.net.InetSocketAddress
 
 /**
@@ -13,7 +16,7 @@ open class Session(private val channel: Channel) {
 
     /**
      * The ip address of the channel that connected to the server
-    c   */
+     */
     fun getIp(): String {
         return (channel.localAddress() as? InetSocketAddress)?.address?.hostAddress ?: "127.0.0.1"
     }
@@ -38,6 +41,15 @@ open class Session(private val channel: Channel) {
      */
     fun disconnect(): ChannelFuture? {
         return channel.disconnect()
+    }
+
+    /**
+     * Replacing a handler in the [ChannelPipeline].
+     */
+    fun replaceHandler(name: String, handler: ChannelHandler): ChannelPipeline? {
+        val pipeline = channel.pipeline()
+        pipeline.replace(name, handler)
+        return pipeline
     }
 
     companion object {
