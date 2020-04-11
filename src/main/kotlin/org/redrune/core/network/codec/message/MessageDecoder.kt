@@ -1,8 +1,8 @@
 package org.redrune.core.network.codec.message
 
 import io.netty.channel.ChannelHandler
+import org.redrune.core.io.read.Reader
 import org.redrune.core.network.model.message.Message
-import org.redrune.core.network.codec.packet.access.PacketReader
 import java.util.*
 
 /**
@@ -28,7 +28,7 @@ abstract class MessageDecoder<M : Message>(
      * @param packet PacketReader The reader of the packet
      * @return T The message to return
      */
-    abstract fun decode(packet: PacketReader): M
+    abstract fun decode(packet: Reader): M
 
     override fun toString(): String {
         return "MessageDecoder[opcodes=${Arrays.toString(opcodes)}, length=$length]"

@@ -83,7 +83,7 @@ abstract class PacketDecoder : ByteToMessageDecoder() {
             val payload = buf.readBytes(length)
 
             //Handle data
-            out.add(PacketReader(opcode, type, payload))
+            out.add(PacketReader(opcode, payload.array()))
 
             //Reset state
             state = DECODE_OPCODE

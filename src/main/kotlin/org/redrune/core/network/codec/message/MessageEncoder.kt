@@ -1,8 +1,8 @@
 package org.redrune.core.network.codec.message
 
 import io.netty.channel.ChannelHandler
+import org.redrune.core.io.write.Writer
 import org.redrune.core.network.model.message.Message
-import org.redrune.core.network.codec.packet.access.PacketBuilder
 import java.lang.reflect.ParameterizedType
 import kotlin.reflect.KClass
 
@@ -16,7 +16,7 @@ abstract class MessageEncoder<M : Message> {
     /**
      * Encodes a message into a packet builder
      */
-    abstract fun encode(builder: PacketBuilder, msg: M)
+    abstract fun encode(builder: Writer, msg: M)
 
     @Suppress("UNCHECKED_CAST")
     fun getGenericTypeClass(): KClass<M> {
