@@ -14,7 +14,7 @@ import org.redrune.core.io.Modifier
  * @since February 18, 2020
  */
 open class BufferWriter(
-    protected open val buffer: ByteBuf = Unpooled.buffer()
+        val buffer: ByteBuf = Unpooled.buffer()
 ) : Writer {
     private var bitIndex = 0
 

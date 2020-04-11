@@ -10,13 +10,13 @@ import org.redrune.core.tools.crypto.IsaacCipher
  * @author Tyluur <contact@kiaira.tech>
  * @since February 18, 2020
  */
-class PacketBuilder(override val buffer: ByteBuf, override val cipher: IsaacCipher? = null) : PacketWriter() {
+class PacketBuilder(private val cipher: IsaacCipher? = null, private val sized: Boolean = cipher != null) {
 
-    init {
-        println("packet builder init!")
-        if (opcode != null) {
-            writeOpcode(opcode!!, type)
-            println("Wrote an opcode whne constructing the packet builder ($opcode)")
+    fun build(buffer: ByteBuf, build: (PacketWriter) -> Unit) {
+        val writer = PacketWriter(buffer = buffer, cipher = cipher)
+        build(writer)
+        if(sized) {
+            writer.writeSize()
         }
     }
 

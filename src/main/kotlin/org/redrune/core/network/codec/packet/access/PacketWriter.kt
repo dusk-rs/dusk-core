@@ -14,24 +14,14 @@ import org.redrune.core.tools.crypto.IsaacCipher
  * @since February 18, 2020
  */
 open class PacketWriter(
-    protected var opcode: Int? = null,
-    protected var type: PacketType = PacketType.FIXED,
     buffer: ByteBuf = Unpooled.buffer(),
     protected open val cipher: IsaacCipher? = null
 ) : BufferWriter(buffer) {
     private var sizeIndex = 0
-
-    init {
-        println("packet builder init!")
-        if (opcode != null) {
-            writeOpcode(opcode!!, type)
-            println("Wrote an opcode whne constructing the packet builder ($opcode)")
-        }
-    }
+    protected var type: PacketType = PacketType.FIXED
 
     fun writeOpcode(opcode: Int, type: PacketType) {
         this.type = type
-        this.opcode = opcode
         if (cipher != null) {
             if (opcode >= 128) {
                 writeByte(((opcode shr 8) + 128) + cipher!!.nextInt())
