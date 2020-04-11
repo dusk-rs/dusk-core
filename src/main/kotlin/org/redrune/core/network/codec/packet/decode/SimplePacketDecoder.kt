@@ -11,7 +11,7 @@ import org.redrune.core.network.codec.packet.PacketDecoder
  * @author Tyluur <contact@kiaira.tech>
  * @since February 18, 2020
  */
-class SimplePacketDecoder(private val codec: Codec) : PacketDecoder() {
+open class SimplePacketDecoder(private val codec: Codec) : PacketDecoder() {
 
     private val logger = InlineLogger()
 
