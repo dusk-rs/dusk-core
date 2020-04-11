@@ -1,4 +1,4 @@
-package org.redrune.core.network.model.packet
+package org.redrune.core.io
 
 /**
  * Byte Encode Modification

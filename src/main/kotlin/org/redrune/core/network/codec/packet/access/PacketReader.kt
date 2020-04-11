@@ -2,9 +2,9 @@ package org.redrune.core.network.codec.packet.access
 
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
-import org.redrune.core.network.model.packet.DataType
-import org.redrune.core.network.model.packet.Endian
-import org.redrune.core.network.model.packet.Modifier
+import org.redrune.core.io.DataType
+import org.redrune.core.io.Endian
+import org.redrune.core.io.Modifier
 import org.redrune.core.network.model.packet.PacketType
 import org.redrune.core.tools.utility.getHexContents
 

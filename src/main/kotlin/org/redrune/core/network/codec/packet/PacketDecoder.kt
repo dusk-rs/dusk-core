@@ -4,10 +4,10 @@ import com.github.michaelbull.logging.InlineLogger
 import io.netty.buffer.ByteBuf
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.ByteToMessageDecoder
+import org.redrune.core.network.codec.packet.DecoderState.*
+import org.redrune.core.network.codec.packet.access.PacketReader
 import org.redrune.core.network.model.packet.PacketType
 import org.redrune.core.network.model.packet.PacketType.*
-import org.redrune.core.network.codec.packet.access.PacketReader
-import org.redrune.core.network.codec.packet.DecoderState.*
 
 /**
  * @author Tyluur <contact@kiaira.tech>
@@ -65,16 +65,10 @@ abstract class PacketDecoder : ByteToMessageDecoder() {
                 return
             }
             // when the packet is of a variable length, the expected length is overwritten by the length encoded next
-            when (type) {
-                BYTE -> {
-                    length = buf.readUnsignedByte().toInt()
-                }
-                SHORT -> {
-                    length = buf.readUnsignedShort()
-                }
-                else -> {
-                    throw IllegalStateException("Decoding length from packet #$opcode with type $type!")
-                }
+            length = when (type) {
+                BYTE -> buf.readUnsignedByte().toInt()
+                SHORT -> buf.readUnsignedShort()
+                else -> throw IllegalStateException("Decoding length from packet #$opcode with type $type!")
             }
             logger.info { "Identified length! [opcode=$opcode, length=$length, type=$type]" }
             state = DECODE_PAYLOAD
