@@ -6,7 +6,7 @@ import org.redrune.core.tools.crypto.IsaacCipher
 /**
  * The building of a packet is done by this class
  *
- * @author Greg Hibb
+ * @author Greg Hibberd <greg@greghibberd.com>
  * @author Tyluur <contact@kiaira.tech>
  * @since February 18, 2020
  */

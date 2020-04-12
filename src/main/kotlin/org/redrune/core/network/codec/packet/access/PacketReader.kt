@@ -4,7 +4,7 @@ import org.redrune.core.io.read.BufferReader
 import java.nio.ByteBuffer
 
 /**
- * @author Greg Hibb
+ * @author Greg Hibberd <greg@greghibberd.com>
  * @author Tyluur <contact@kiaira.tech>
  * @since February 18, 2020
  */

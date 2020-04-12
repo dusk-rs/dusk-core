@@ -2,7 +2,7 @@ package org.redrune.core.io
 
 /**
  * Byte Encode Modification
- * @author Greg Hibb
+ * @author Greg Hibberd <greg@greghibberd.com>
  * @author Tyluur <contact@kiaira.tech>
  * @since February 18, 2020
  */
