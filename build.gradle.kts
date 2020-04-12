@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "org.redrune.core"
-version = "0.0.9"
+version = "0.0.10"
 
 java.sourceCompatibility = JavaVersion.VERSION_11
 
