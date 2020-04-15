@@ -1,1 +1,1 @@
-rootProject.name = "redrune-network-core"
+rootProject.name = "dusk-shared"

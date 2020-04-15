@@ -6,7 +6,7 @@ plugins {
     java
 }
 
-group = "org.redrune.core"
+group = "rs.dusk.core"
 version = "0.0.10"
 
 java.sourceCompatibility = JavaVersion.VERSION_11
