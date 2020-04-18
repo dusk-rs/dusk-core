@@ -80,10 +80,12 @@ abstract class PacketDecoder : ByteToMessageDecoder() {
             }
 
             //Copy from unsafe buffer
-            val payload = buf.readBytes(length)
+            val payload = ByteArray(length)
+            buf.getBytes(buf.readerIndex(), payload, 0, length)
+            buf.readerIndex(buf.readerIndex() + length)
 
             //Handle data
-            out.add(PacketReader(opcode, payload.array()))
+            out.add(PacketReader(opcode, payload))
 
             //Reset state
             state = DECODE_OPCODE

@@ -52,7 +52,7 @@ class NetworkMessageHandler(private val codec: Codec, private val event: Connect
             handler.handle(ctx, msg)
 
             logger.info {
-                "Handled successfully[msg=$msg, codec=${codec.javaClass.simpleName}, handler=${handler.javaClass.simpleName}, pipeline=${ctx.pipeline()
+                "Handled successfully [msg=$msg, codec=${codec.javaClass.simpleName}, handler=${handler.javaClass.simpleName}, pipeline=${ctx.pipeline()
                     .getPipelineContents()}]"
             }
         } catch (e: IOException) {
