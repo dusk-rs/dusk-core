@@ -11,7 +11,7 @@ import kotlin.reflect.KClass
  * @author Tyluur <contact@kiaira.tech>
  * @since February 18, 2020
  */
-abstract class Codec : CodecRepository(), CodecFunction {
+abstract class Codec : CodecRepository() {
 
     private val logger = InlineLogger()
 

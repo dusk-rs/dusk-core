@@ -11,7 +11,7 @@ import kotlin.reflect.KClass
  * @author Tyluur <contact@kiaira.tech>
  * @since February 18, 2020
  */
-abstract class CodecRepository {
+abstract class CodecRepository : CodecFunction {
 
     /**
      * The map of decoders, which are of type D, and are specified by the opcode of the message they are handling

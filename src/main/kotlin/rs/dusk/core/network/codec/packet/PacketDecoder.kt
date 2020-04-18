@@ -85,7 +85,7 @@ abstract class PacketDecoder : ByteToMessageDecoder() {
             buf.readerIndex(buf.readerIndex() + length)
 
             //Handle data
-            out.add(PacketReader(opcode, payload))
+            out.add(PacketReader(opcode, type, payload))
 
             //Reset state
             state = DECODE_OPCODE

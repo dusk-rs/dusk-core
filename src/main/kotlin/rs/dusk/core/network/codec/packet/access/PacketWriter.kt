@@ -20,7 +20,7 @@ open class PacketWriter(
     private var sizeIndex = 0
     protected var type: PacketType = PacketType.FIXED
 
-    fun writeOpcode(opcode: Int, type: PacketType) {
+    fun writeOpcode(opcode: Int, type: PacketType = PacketType.FIXED) {
         this.type = type
         if (cipher != null) {
             if (opcode >= 128) {
