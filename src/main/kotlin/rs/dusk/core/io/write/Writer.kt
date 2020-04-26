@@ -118,6 +118,8 @@ interface Writer {
 
     fun position(): Int
 
+    fun toArray(): ByteArray
+
     @Throws(IllegalArgumentException::class)
     fun write(type: DataType, value: Number, modifier: Modifier = Modifier.NONE, order: Endian = Endian.BIG)
 

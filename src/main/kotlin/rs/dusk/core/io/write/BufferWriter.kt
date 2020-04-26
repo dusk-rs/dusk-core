@@ -133,6 +133,12 @@ open class BufferWriter(
         }
     }
 
+    override fun toArray(): ByteArray {
+        val data = ByteArray(position())
+        System.arraycopy(buffer.array(), 0, data, 0, data.size)
+        return data
+    }
+
     companion object {
         /**
          * Bit masks for [writeBits]
