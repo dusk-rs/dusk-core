@@ -118,6 +118,8 @@ interface Writer {
 
     fun position(): Int
 
+    fun position(index: Int)
+
     fun toArray(): ByteArray
 
     @Throws(IllegalArgumentException::class)

@@ -97,6 +97,10 @@ open class BufferWriter(
         return buffer.writerIndex()
     }
 
+    override fun position(index: Int) {
+        buffer.writerIndex(index)
+    }
+
     override fun write(type: DataType, value: Number, modifier: Modifier, order: Endian) {
         val longValue = value.toLong()
         when (order) {
