@@ -24,7 +24,7 @@ class GenericMessageEncoder(private val codec: Codec, private val builder: Packe
     override fun encode(ctx: ChannelHandlerContext, msg: Message, out: ByteBuf) {
         val encoder = codec.encoder(msg::class) as? MessageEncoder<Message>
         if (encoder == null) {
-            logger.warn { "Unable to find encoder! [msg=$msg, codec=${codec.javaClass.simpleName}]" }
+            logger.error { "Unable to find encoder! [msg=$msg, codec=${codec.javaClass.simpleName}]" }
             return
         }
         builder.build(out) {

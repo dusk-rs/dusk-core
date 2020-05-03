@@ -54,7 +54,7 @@ class ReestablishmentEvent(
 
     private fun run(): Boolean {
         if (running) {
-            logger.info { "An attempt to run multiple re-establishment events has been stopped." }
+            logger.debug { "An attempt to run multiple re-establishment events has been stopped." }
             return false
         }
         running = true
@@ -67,7 +67,7 @@ class ReestablishmentEvent(
         logger.info { "Re-establishment is starting, it will be attempted $limit times at an interval of $delay ms." }
         repeat(limit) {
 
-            logger.info { "Re-establishment attempt ${attempt}/$limit is running." }
+            logger.debug { "Re-establishment attempt ${attempt}/$limit is running." }
 
             val reconnected = reconnect()
 
@@ -78,7 +78,7 @@ class ReestablishmentEvent(
                 if (attempt == limit) {
                     logger.info { "Re-establishment of the connection failed after $limit  attempts, shutting down." }
                 } else {
-                    logger.info { "Re-establishment attempt ${attempt}/$limit failed." }
+                    logger.debug { "Re-establishment attempt ${attempt}/$limit failed." }
                 }
             }
 

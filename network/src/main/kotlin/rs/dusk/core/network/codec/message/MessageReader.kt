@@ -22,7 +22,7 @@ class MessageReader(private val codec: Codec) : SimpleChannelInboundHandler<Mess
             val handler: MessageHandler<Message>? = codec.handler(msg::class) as? MessageHandler<Message>
 
             if (handler == null) {
-                logger.warn { "Unable to find message handler - [msg=$msg], codec=${codec.javaClass.simpleName}" }
+                logger.error { "Unable to find message handler - [msg=$msg], codec=${codec.javaClass.simpleName}" }
                 return
             }
 

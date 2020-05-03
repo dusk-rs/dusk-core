@@ -50,7 +50,7 @@ abstract class PacketDecoder : ByteToMessageDecoder() {
     override fun decode(ctx: ChannelHandlerContext, buf: ByteBuf, out: MutableList<Any>) {
         if (state == DECODE_OPCODE) {
             if (!buf.isReadable) {
-                logger.warn { "Unable to decode opcode from buffer - buffer is not readable." }
+                logger.error { "Unable to decode opcode from buffer - buffer is not readable." }
                 return
             }
             opcode = readOpcode(buf)
@@ -61,7 +61,7 @@ abstract class PacketDecoder : ByteToMessageDecoder() {
         }
         if (state == DECODE_LENGTH) {
             if (buf.readableBytes() < if (length == -1) 1 else 2) {
-                logger.warn { "Unable to decode length from buffer [opcode=$opcode] - buffer is not readable [readable=${buf.readableBytes()}]." }
+                logger.error { "Unable to decode length from buffer [opcode=$opcode] - buffer is not readable [readable=${buf.readableBytes()}]." }
                 return
             }
             // when the packet is of a variable length, the expected length is overwritten by the length encoded next
@@ -75,7 +75,7 @@ abstract class PacketDecoder : ByteToMessageDecoder() {
         }
         if (state == DECODE_PAYLOAD) {
             if (buf.readableBytes() < length) {
-                logger.warn { "Unable to decode payload from buffer - length=$length, readable=${buf.readableBytes()}." }
+                logger.error { "Unable to decode payload from buffer - length=$length, readable=${buf.readableBytes()}." }
                 return
             }
 
