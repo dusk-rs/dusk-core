@@ -18,7 +18,7 @@ fun main() {
     val client = NetworkClient(settings)
 
     val chain = ConnectionEventChain().apply {
-        append(DEREGISTER, ReestablishmentEvent(client, retryCapacity = 10, retryDelay = 1000))
+        append(DEREGISTER, ReestablishmentEvent(client, limit = 1, delay = 10))
     }
 
     val pipeline = ConnectionPipeline {

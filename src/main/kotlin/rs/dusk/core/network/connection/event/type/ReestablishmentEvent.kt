@@ -5,9 +5,10 @@ import io.netty.channel.ChannelHandlerContext
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import rs.dusk.core.network.connection.client.NetworkClient
 import rs.dusk.core.network.connection.event.ConnectionEvent
+import rs.dusk.core.network.connection.event.type.ReestablishmentResponse.FAILURE
+import rs.dusk.core.network.connection.event.type.ReestablishmentResponse.SUCCESS
 
 /**
  * @author Tyluur <contact@kiaira.tech>
@@ -23,12 +24,12 @@ class ReestablishmentEvent(
     /**
      * The maximum amount of re-connection attempts
      */
-    private val retryCapacity: Int,
+    private val limit: Int,
 
     /**
      * After a connection has closed, this value is the amount of seconds to wait until attempting to reconnect
      */
-    private val retryDelay: Long
+    private val delay: Long
 ) : ConnectionEvent {
 
     private val logger = InlineLogger()
@@ -39,30 +40,71 @@ class ReestablishmentEvent(
     private var running = false
 
     override fun run(ctx: ChannelHandlerContext, cause: Throwable?) {
-        if (running) {
-            logger.info { "An attempt to run multiple re-establishment events has been stopped." }
+        if (!run()) {
             return
         }
-        running = true
-        runBlocking {
-            GlobalScope.launch {
-                println("1")
-                reestablish()
-                println("2")
+        GlobalScope.launch {
+            val response = reestablish()
+            if (response == FAILURE) {
+                client.shutdown()
             }
+            running = false
         }
     }
 
-    private suspend fun reestablish() {
-        logger.info { "Attempt is starting [cap=$retryCapacity del=$retryDelay]" }
-        var attempt = 1
-        repeat(retryCapacity) {
-            delay(retryDelay)
+    private fun run(): Boolean {
+        if (running) {
+            logger.info { "An attempt to run multiple re-establishment events has been stopped." }
+            return false
+        }
+        running = true
+        return true
+    }
 
-            logger.info { "Retry attempt ${attempt}/$retryCapacity is running." }
+    private suspend fun reestablish(): ReestablishmentResponse {
+        var attempt = 1
+
+        logger.info { "Re-establishment is starting, it will be attempted $limit times at an interval of $delay ms." }
+        repeat(limit) {
+
+            logger.info { "Re-establishment attempt ${attempt}/$limit is running." }
+
+            val reconnected = reconnect()
+
+            if (reconnected) {
+                logger.info { "Successfully reconnected to the server after attempt #$attempt." }
+                return SUCCESS
+            } else {
+                if (attempt == limit) {
+                    logger.info { "Re-establishment of the connection failed after $limit  attempts, shutting down." }
+                } else {
+                    logger.info { "Re-establishment attempt ${attempt}/$limit failed." }
+                }
+            }
+
+            delay(delay)
             attempt++
         }
-        logger.info { "End of retry arrived." }
+        return FAILURE
     }
 
+    /**
+     * Handles the reconnection attempt of the [client][NetworkClient] to the [host][rs.dusk.core.network.connection.ConnectionSettings.host]
+     */
+    private fun reconnect(): Boolean {
+        return try {
+            client.start()
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+}
+
+/**
+ * The results that are possible from a re-establishment attempt
+ */
+private enum class ReestablishmentResponse {
+    SUCCESS, FAILURE
 }

@@ -32,7 +32,6 @@ dependencies {
     implementation("com.google.guava:guava:19.0")
     implementation("org.apache.commons:commons-lang3:3.0")
     implementation(group = "com.michael-bull.kotlin-inline-logger", name = "kotlin-inline-logger-jvm", version = "1.0.2")
-    implementation("com.michael-bull.kotlin-retry:kotlin-retry:1.0.5")
     implementation(group = "io.github.classgraph", name = "classgraph", version = "4.6.3")
 
     //Logging

@@ -5,11 +5,12 @@ import io.netty.bootstrap.Bootstrap
 import io.netty.channel.ChannelFuture
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.ChannelOption
+import io.netty.channel.ChannelOption.SO_KEEPALIVE
+import io.netty.channel.ChannelOption.TCP_NODELAY
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioSocketChannel
 import rs.dusk.core.network.connection.ConnectionSettings
-import kotlin.system.exitProcess
 
 /**
  * @author Tyluur <contact@kiaira.tech>
@@ -30,15 +31,20 @@ class NetworkClient(private val settings: ConnectionSettings) : Bootstrap() {
     private var future: ChannelFuture? = null
 
     /**
+     * The group used for work
+     */
+    private val group = NioEventLoopGroup()
+
+    /**
      * The options used for the connection are configured here, as well as the [ChannelInitializer]
      */
     fun configure(initializer: ChannelInitializer<SocketChannel>) {
-        group(NioEventLoopGroup())
+        group(group)
         channel(NioSocketChannel::class.java)
         handler(initializer)
         option(ChannelOption.SO_REUSEADDR, true)
-        option(ChannelOption.TCP_NODELAY, true)
-        option(ChannelOption.SO_KEEPALIVE, true)
+        option(TCP_NODELAY, true)
+        option(SO_KEEPALIVE, true)
     }
 
     /**
@@ -58,9 +64,7 @@ class NetworkClient(private val settings: ConnectionSettings) : Bootstrap() {
     fun shutdown() {
         future?.channel()?.disconnect()
         future?.channel()?.close()
-        future = null
-        logger.info { "Shutdown was a success" }
-        exitProcess(-1)
+        group.shutdownGracefully()
     }
 
 }
