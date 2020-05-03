@@ -1,9 +1,11 @@
 package rs.dusk.core.tools.utility
 
+import io.github.classgraph.ClassGraph
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.ByteBufUtil
 import io.netty.channel.ChannelHandler
 import io.netty.channel.ChannelPipeline
+import rs.dusk.core.network.codec.Codec
 import java.util.*
 
 /**
@@ -14,6 +16,8 @@ class NetworkUtility {
 
 
     companion object {
+
+        val RESULT = ClassGraph().enableClassInfo().scan()
 
         /**
          * Converts an IP-Address as string to Integer.
@@ -30,6 +34,20 @@ class NetworkUtility {
             return ip[0] shl 24 or (ip[1] shl 16) or (ip[2] shl 8) or ip[3]
         }
 
+        inline fun <reified T> getCodecEntry(): ArrayList<Any> {
+            val name = T::class.qualifiedName
+            val list = RESULT.getSubclasses(name).loadClasses() as MutableList<Class<*>>?
+            val classes = ArrayList<Any>()
+            list?.forEach { classes.add(it.newInstance()) }
+            return classes
+        }
+
+        fun loadCodecs(vararg codecs: Codec) {
+            for (codec in codecs) {
+                codec.register()
+                codec.report()
+            }
+        }
     }
 
 }

@@ -4,7 +4,7 @@ import rs.dusk.core.network.codec.message.MessageDecoder
 import rs.dusk.core.network.codec.message.MessageEncoder
 import rs.dusk.core.network.codec.message.MessageHandler
 import rs.dusk.core.network.model.packet.PacketMetaData
-import rs.dusk.core.tools.function.NetworkUtils
+import rs.dusk.core.tools.utility.NetworkUtility
 import kotlin.reflect.KClass
 
 /**
@@ -32,7 +32,7 @@ abstract class CodecRepository : CodecFunction {
      *
      */
     protected inline fun <reified T : MessageDecoder<*>> bindDecoders() {
-        val decoders = NetworkUtils.getCodecEntry<T>()
+        val decoders = NetworkUtility.getCodecEntry<T>()
         for (clazz in decoders) {
             if (!clazz.javaClass.isAnnotationPresent(PacketMetaData::class.java)) {
                 System.err.println("Unable to register decoder ${clazz.javaClass.name}, no meta data defined!")
@@ -47,7 +47,7 @@ abstract class CodecRepository : CodecFunction {
     }
 
     protected inline fun <reified T : MessageHandler<*>> bindHandlers() {
-        val handlers = NetworkUtils.getCodecEntry<T>()
+        val handlers = NetworkUtility.getCodecEntry<T>()
         for (clazz in handlers) {
             val handler = clazz as T
             val type: KClass<*> = handler.getGenericTypeClass()
@@ -56,7 +56,7 @@ abstract class CodecRepository : CodecFunction {
     }
 
     protected inline fun <reified T : MessageEncoder<*>> bindEncoders() {
-        val encoders = NetworkUtils.getCodecEntry<T>()
+        val encoders = NetworkUtility.getCodecEntry<T>()
         for (clazz in encoders) {
             val encoder = clazz as T
             val type: KClass<*> = encoder.getGenericTypeClass()
