@@ -30,7 +30,7 @@ class GenericMessageEncoder(private val codec: Codec, private val builder: Packe
         builder.build(out) {
             encoder.encode(it, msg)
         }
-        logger.info { "Encoding successful [encoder=${encoder.javaClass.simpleName}, msg=$msg, codec=${codec.javaClass.simpleName}" }
+        logger.debug { "Encoding successful [encoder=${encoder.javaClass.simpleName}, msg=$msg, codec=${codec.javaClass.simpleName}" }
     }
 
 }

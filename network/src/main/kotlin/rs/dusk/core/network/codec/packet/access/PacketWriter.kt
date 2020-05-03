@@ -42,7 +42,6 @@ open class PacketWriter(
             else -> {
             }
         }
-        println("write opcode $opcode")
     }
 
     fun writeSize() {

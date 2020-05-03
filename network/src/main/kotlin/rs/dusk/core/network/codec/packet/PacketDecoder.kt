@@ -57,7 +57,7 @@ abstract class PacketDecoder : ByteToMessageDecoder() {
             length = getExpectedLength(opcode) ?: buf.readableBytes()
             type = PacketType.byLength(length)
             state = if (length < 0) DECODE_LENGTH else DECODE_PAYLOAD
-            logger.info { "Identified opcode! [opcode=$opcode, expectedLength=$length, readable=${buf.readableBytes()}, nextState=$state]" }
+            logger.debug { "Identified opcode! [opcode=$opcode, expectedLength=$length, readable=${buf.readableBytes()}, nextState=$state]" }
         }
         if (state == DECODE_LENGTH) {
             if (buf.readableBytes() < if (length == -1) 1 else 2) {
@@ -70,7 +70,7 @@ abstract class PacketDecoder : ByteToMessageDecoder() {
                 SHORT -> buf.readUnsignedShort()
                 else -> throw IllegalStateException("Decoding length from packet #$opcode with type $type!")
             }
-            logger.info { "Identified length! [opcode=$opcode, length=$length, type=$type]" }
+            logger.debug { "Identified length! [opcode=$opcode, length=$length, type=$type]" }
             state = DECODE_PAYLOAD
         }
         if (state == DECODE_PAYLOAD) {
@@ -90,7 +90,7 @@ abstract class PacketDecoder : ByteToMessageDecoder() {
             //Reset state
             state = DECODE_OPCODE
 
-            logger.info { "Finished and pushed. remaining readable = ${buf.readableBytes()} [opcode=$opcode] " }
+            logger.debug { "Finished and pushed. remaining readable = ${buf.readableBytes()} [opcode=$opcode] " }
         }
     }
 

@@ -13,7 +13,6 @@ import rs.dusk.core.utility.crypto.IsaacCipher
 class RS2PacketDecoder(private val cipher: IsaacCipher, codec: Codec) : SimplePacketDecoder(codec) {
 
     override fun readOpcode(buf: ByteBuf): Int {
-        println("attempting to read opcode of a rs2 packet with cipher=${cipher.seed.contentToString()}")
         return (buf.readUnsignedByte().toInt() - cipher.nextInt()) and 0xff
     }
 

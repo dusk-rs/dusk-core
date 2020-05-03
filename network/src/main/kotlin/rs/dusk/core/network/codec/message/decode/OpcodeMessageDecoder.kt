@@ -26,6 +26,6 @@ class OpcodeMessageDecoder(private val codec: Codec) : MessageToMessageDecoder<P
         }
         val message = decoder.decode(msg)
         out.add(message)
-        logger.info { "Message decoding successful [decoder=${decoder.javaClass.simpleName}, codec=$codec]"}
+        logger.debug { "Message decoding successful [decoder=${decoder.javaClass.simpleName}, codec=$codec]" }
     }
 }

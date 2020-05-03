@@ -28,9 +28,9 @@ class MessageReader(private val codec: Codec) : SimpleChannelInboundHandler<Mess
 
             handler.handle(ctx, msg)
 
-            logger.info {
+            logger.debug {
                 "Handled successfully [msg=$msg, codec=${codec.javaClass.simpleName}, handler=${handler.javaClass.simpleName}, pipeline=${ctx.pipeline()
-                    .getPipelineContents()}]"
+                        .getPipelineContents()}]"
             }
         } catch (e: IOException) {
             e.printStackTrace()
