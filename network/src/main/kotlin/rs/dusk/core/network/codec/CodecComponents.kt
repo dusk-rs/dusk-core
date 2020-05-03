@@ -36,13 +36,12 @@ open class CodecComponents {
 	
 	inline fun <reified T : MessageDecoder<*>> bindDecoders() {
 		val decoders = ReflectionUtils.findSubclasses<T>()
-		for (clazz in decoders) {
-			if (!clazz.javaClass.isAnnotationPresent(PacketMetaData::class.java)) {
-				System.err.println("Unable to register decoder ${clazz.javaClass.name}, no meta data defined!")
+		for (decoder in decoders) {
+			if (!decoder.javaClass.isAnnotationPresent(PacketMetaData::class.java)) {
+				System.err.println("Unable to register decoder ${decoder.javaClass.name}, no meta data defined!")
 				continue
 			}
-			val metaData = clazz.javaClass.getDeclaredAnnotation(PacketMetaData::class.java)
-			val decoder = clazz as T
+			val metaData = decoder.javaClass.getDeclaredAnnotation(PacketMetaData::class.java)
 			decoder.opcodes = metaData.opcodes
 			decoder.length = metaData.length
 			bindDecoder(decoder)
@@ -51,18 +50,16 @@ open class CodecComponents {
 	
 	inline fun <reified T : MessageHandler<*>> bindHandlers() {
 		val handlers = ReflectionUtils.findSubclasses<T>()
-		for (clazz in handlers) {
-			val handler = clazz as T
-			val type : KClass<*> = handler.getGenericTypeClass()
+		for (handler in handlers) {
+			val type: KClass<*> = handler.getGenericTypeClass()
 			bindHandler(type, handler)
 		}
 	}
 	
 	inline fun <reified T : MessageEncoder<*>> bindEncoders() {
 		val encoders = ReflectionUtils.findSubclasses<T>()
-		for (clazz in encoders) {
-			val encoder = clazz as T
-			val type : KClass<*> = encoder.getGenericTypeClass()
+		for (encoder in encoders) {
+			val type: KClass<*> = encoder.getGenericTypeClass()
 			bindEncoder(type, encoder)
 		}
 	}
