@@ -23,18 +23,21 @@ dependencies {
     //Main
     implementation(kotlin("stdlib-jdk8"))
     implementation(kotlin("reflect"))
-    implementation("io.netty:netty-all:4.1.44.Final")
-    implementation(group = "org.yaml", name = "snakeyaml", version = "1.8")
-    implementation(group = "io.github.classgraph", name = "classgraph", version = "4.6.3")
-    implementation(group = "com.michael-bull.kotlin-inline-logger", name = "kotlin-inline-logger-jvm", version = "1.0.2")
+    implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = "1.3.5")
 
-    //Logging
-    implementation("org.slf4j:slf4j-api:1.7.30")
-    implementation("ch.qos.logback:logback-classic:1.2.3")
+    //Network
+    implementation("io.netty:netty-all:4.1.44.Final")
 
     //Utilities
     implementation("com.google.guava:guava:19.0")
     implementation("org.apache.commons:commons-lang3:3.0")
+    implementation(group = "com.michael-bull.kotlin-inline-logger", name = "kotlin-inline-logger-jvm", version = "1.0.2")
+    implementation("com.michael-bull.kotlin-retry:kotlin-retry:1.0.5")
+    implementation(group = "io.github.classgraph", name = "classgraph", version = "4.6.3")
+
+    //Logging
+    implementation("org.slf4j:slf4j-api:1.7.30")
+    implementation("ch.qos.logback:logback-classic:1.2.3")
 
     //Testing
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.2")
