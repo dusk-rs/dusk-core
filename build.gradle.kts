@@ -23,7 +23,7 @@ allprojects {
 	
 	
 	group = "rs.dusk.core"
-	version = "0.0.10"
+	version = "0.1.0"
 	
 	java.sourceCompatibility = JavaVersion.VERSION_11
 	
