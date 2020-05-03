@@ -10,15 +10,15 @@ import kotlin.reflect.KClass
  * @author Tyluur <contact@kiaira.tech>
  * @since May 02, 2020
  */
-object CodecRepository {
-	
+class CodecRepository {
+
 	private val logger = InlineLogger()
-	
+
 	/**
 	 * The collection of all [codecs][Codec], identifiable by class name
 	 */
 	private val map = HashMap<KClass<*>, Codec>()
-	
+
 	/**
 	 * The registration of all [codecs][Codec] is done here using reflection
 	 */
