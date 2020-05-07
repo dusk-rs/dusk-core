@@ -6,7 +6,7 @@ import io.netty.channel.ChannelHandlerContext
  * @author Tyluur <contact@kiaira.tech>
  * @since May 02, 2020
  */
-class ConnectionEventChain {
+open class ConnectionEventChain {
 	
 	/**
 	 * A map of each [Event Type][ConnectionEventType], which holds a list of the possible [connection events][ConnectionEvent] that it may invoke

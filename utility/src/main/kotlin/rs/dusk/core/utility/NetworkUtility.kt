@@ -11,27 +11,26 @@ import java.util.*
  * @since March 03, 2020
  */
 class NetworkUtility {
-
-
-    companion object {
-
-        /**
-         * Converts an IP-Address as string to Integer.
-         *
-         * @return The Integer.
-         */
-        fun convertIPToNumber(ipAddress: String?): Int {
-            val st = StringTokenizer(ipAddress, ".")
-            val ip = IntArray(4)
-            var i = 0
-            while (st.hasMoreTokens()) {
-                ip[i++] = st.nextToken().toInt()
-            }
-            return ip[0] shl 24 or (ip[1] shl 16) or (ip[2] shl 8) or ip[3]
-        }
-
-    }
-
+	
+	companion object {
+		
+		/**
+		 * Converts an IP-Address as string to Integer.
+		 *
+		 * @return The Integer.
+		 */
+		fun convertIPToNumber(ipAddress : String?) : Int {
+			val st = StringTokenizer(ipAddress, ".")
+			val ip = IntArray(4)
+			var i = 0
+			while (st.hasMoreTokens()) {
+				ip[i++] = st.nextToken().toInt()
+			}
+			return ip[0] shl 24 or (ip[1] shl 16) or (ip[2] shl 8) or ip[3]
+		}
+		
+	}
+	
 }
 
 /**
@@ -39,30 +38,30 @@ class NetworkUtility {
  * @receiver Channel
  * @return String
  */
-fun ChannelPipeline.getPipelineContents(): String {
-    val list = mutableMapOf<String, String>()
-    forEach { list[it.key] = it.value.javaClass.simpleName }
-    return list.toString()
+fun ChannelPipeline.getPipelineContents() : String {
+	val list = mutableMapOf<String, String>()
+	forEach { list[it.key] = it.value.javaClass.simpleName }
+	return list.toString()
+}
+
+fun ChannelPipeline.replace(name : String, handler : ChannelHandler) : ChannelHandler? {
+	return replace(name, name, handler)
 }
 
 /**
  * Returns the contents of the buffer in a readable format (hexadecimal)
  */
-fun ByteBuf.getHexContents(): String {
-    return ByteBufUtil.hexDump(toByteArraySafe())
+fun ByteBuf.getHexContents() : String {
+	return ByteBufUtil.hexDump(toByteArraySafe())
 }
 
-fun ChannelPipeline.replace(name: String, handler: ChannelHandler): ChannelHandler? {
-    return replace(name, name, handler)
-}
-
-fun ByteBuf.toByteArraySafe(): ByteArray {
-    if (this.hasArray()) {
-        return this.array()
-    }
-
-    val bytes = ByteArray(this.readableBytes())
-    this.getBytes(this.readerIndex(), bytes)
-
-    return bytes
+fun ByteBuf.toByteArraySafe() : ByteArray {
+	if (this.hasArray()) {
+		return this.array()
+	}
+	
+	val bytes = ByteArray(this.readableBytes())
+	this.getBytes(this.readerIndex(), bytes)
+	
+	return bytes
 }

@@ -4,7 +4,7 @@ import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
 import rs.dusk.core.io.write.BufferWriter
 import rs.dusk.core.network.model.packet.PacketType
-import rs.dusk.core.utility.crypto.IsaacCipher
+import rs.dusk.core.io.crypto.IsaacCipher
 
 /**
  * All functions relative to writing directly to a packet are done by this class
