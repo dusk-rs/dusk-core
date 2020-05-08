@@ -17,7 +17,7 @@ import rs.dusk.core.network.connection.secure.SslServerInitializer
  * @author Tyluur <contact@kiaira.tech>
  * @since March 18, 2020
  */
-class NetworkServer(
+open class NetworkServer(
 	/**
 	 * The connection settings to use
 	 */

@@ -16,7 +16,7 @@ plugins {
 	java
 }
 
-allprojects {
+subprojects {
 	apply(plugin = "kotlin")
 	apply(plugin = "idea")
 	apply(plugin = "org.jetbrains.kotlin.jvm")
@@ -73,7 +73,7 @@ allprojects {
 	
 }
 
-allprojects {
+subprojects {
 	apply(plugin="maven-publish")
 	val sourcesJar by tasks.registering(Jar::class) {
 		archiveClassifier.set("sources")

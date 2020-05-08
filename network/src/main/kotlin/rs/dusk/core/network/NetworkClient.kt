@@ -16,7 +16,7 @@ import rs.dusk.core.network.connection.ConnectionSettings
  * @author Tyluur <contact@kiaira.tech>
  * @since March 25, 2020
  */
-class NetworkClient(private val settings : ConnectionSettings) {
+open class NetworkClient(private val settings : ConnectionSettings) {
 	
 	private val logger = InlineLogger()
 	
