@@ -17,9 +17,6 @@ open class ConnectionEventChain {
 	 * The addition of an event to the [event type][ConnectionEventType] list of events
 	 */
 	fun append(type : ConnectionEventType, event : ConnectionEvent) {
-		if (events.containsKey(type)) {
-			throw IllegalStateException("Duplicate event type registration attempt [type=$type]")
-		}
 		val list = events[type] ?: mutableListOf()
 		list.add(event)
 		events[type] = list

@@ -5,7 +5,7 @@ import io.netty.channel.ChannelHandlerContext
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import rs.dusk.core.network.connection.client.NetworkClient
+import rs.dusk.core.network.NetworkClient
 import rs.dusk.core.network.connection.event.ConnectionEvent
 import rs.dusk.core.network.connection.event.type.ReestablishmentResponse.FAILURE
 import rs.dusk.core.network.connection.event.type.ReestablishmentResponse.SUCCESS
@@ -14,19 +14,19 @@ import rs.dusk.core.network.connection.event.type.ReestablishmentResponse.SUCCES
  * @author Tyluur <contact@kiaira.tech>
  * @since May 02, 2020
  */
-class ReestablishmentEvent(
-
-    /**
+class ConnectionReestablishmentEvent(
+	
+	/**
      * The client that we wish to reconnect to a server
      */
     private val client: NetworkClient,
-
-    /**
+	
+	/**
      * The maximum amount of re-connection attempts
      */
     private val limit: Int,
-
-    /**
+	
+	/**
      * After a connection has closed, this value is the amount of seconds to wait until attempting to reconnect
      */
     private val delay: Long
@@ -93,7 +93,7 @@ class ReestablishmentEvent(
      */
     private fun reconnect(): Boolean {
         return try {
-            client.start()
+            client.connect()
             true
         } catch (e: Exception) {
             false

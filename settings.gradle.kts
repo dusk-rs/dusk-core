@@ -1,6 +1,3 @@
-rootProject.name = "dusk-shared"
+rootProject.name = "dusk-core"
 
 include(":network", ":utility")
-
-project(":network").projectDir = file("network/")
-project(":utility").projectDir = file("utility/")

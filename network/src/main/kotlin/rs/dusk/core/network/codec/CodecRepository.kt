@@ -35,7 +35,6 @@ class CodecRepository {
 		}
 		logger.info { "Successfully registered ${codecs.size} codecs successfully in ${stopwatch.elapsed(MILLISECONDS)} ms" }
 		logger.info { "Statistics[decoders, handlers, encoders]:\t$information" }
-		
 	}
 	
 	/**
