@@ -4,6 +4,7 @@ import com.github.michaelbull.logging.InlineLogger
 import com.google.common.base.Stopwatch
 import rs.dusk.core.utility.ReflectionUtils
 import java.util.concurrent.TimeUnit.MILLISECONDS
+import kotlin.math.log
 import kotlin.reflect.KClass
 
 /**
@@ -18,11 +19,24 @@ class CodecRepository {
 	 * The collection of all [codecs][Codec], identifiable by class name
 	 */
 	private val map = HashMap<KClass<*>, Codec>()
+	
+	/**
+	 * A flag for registration, to avoid duplicate [registration][registerAll]
+	 */
+	private var registered = false
 
+	init {
+		registerAll()
+	}
+	
 	/**
 	 * The registration of all [codecs][Codec] is done here using reflection
 	 */
 	fun registerAll() {
+		if (registered) {
+			logger.warn { "Attempt to registered all codec components failed, already complete! "}
+			return
+		}
 		val stopwatch = Stopwatch.createStarted()
 		val codecs = ReflectionUtils.findSubclasses<Codec>()
 		val information = StringBuilder()
@@ -35,6 +49,7 @@ class CodecRepository {
 		}
 		logger.info { "Successfully registered ${codecs.size} codecs successfully in ${stopwatch.elapsed(MILLISECONDS)} ms" }
 		logger.info { "Statistics[decoders, handlers, encoders]:\t$information" }
+		registered = true
 	}
 	
 	/**
