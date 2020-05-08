@@ -64,7 +64,7 @@ open class NetworkServer(
 	fun bind(sslInitializer : SslServerInitializer? = null) : ChannelFuture = with(bootstrap) {
 		val future = bind(settings.port).syncUninterruptibly()
 		sslInitializer?.addSslHandler(future.channel())
-		logger.info { "Network bound with $settings" }
+		logger.info { "Network bound successfully [settings=$settings]" }
 		return future
 	}
 	

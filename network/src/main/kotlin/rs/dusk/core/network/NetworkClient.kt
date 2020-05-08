@@ -36,6 +36,11 @@ open class NetworkClient(private val settings : ConnectionSettings) {
 	private val bootstrap = Bootstrap()
 	
 	/**
+	 * The [future][ChannelFuture] of the connection to the server
+	 */
+	private var future : ChannelFuture? = null
+	
+	/**
 	 * The options used for the connection are configured here, as well as the [ChannelInitializer]
 	 */
 	fun configure(initializer : ChannelInitializer<SocketChannel>) = with(bootstrap) {
@@ -53,17 +58,10 @@ open class NetworkClient(private val settings : ConnectionSettings) {
 	fun connect() : ChannelFuture = with(bootstrap) {
 		val (host, port) = settings
 		
-		var future : ChannelFuture? = null
+		future = connect(host, port).syncUninterruptibly()
+		logger.info { "Successfully connected to $host on port $port" }
 		
-		try {
-			future = connect(host, port).syncUninterruptibly()
-			logger.info { "Successfully connected to $host on port $port" }
-			
-			connected = true
-		} finally {
-			future?.channel()?.disconnect()
-			future?.channel()?.close()
-		}
+		connected = true
 		return future!!
 	}
 	
@@ -71,6 +69,8 @@ open class NetworkClient(private val settings : ConnectionSettings) {
 	 * Closing the connection to the server
 	 */
 	fun shutdown() {
+		future?.channel()?.disconnect()
+		future?.channel()?.close()
 		group.shutdownGracefully()
 	}
 	

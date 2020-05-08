@@ -13,9 +13,9 @@ import rs.dusk.core.network.connection.factory.ConnectionFactory
  * @author Tyluur <contact@kiaira.tech>
  * @since May 07, 2020
  */
-class ServerConnectionFactory : ConnectionFactory() {
+open class ServerConnectionFactory : ConnectionFactory() {
 	
-	fun bind(server : NetworkServer, chain : ConnectionEventChain, pipeline : ConnectionPipeline) = with(chain) {
+	open fun bind(server : NetworkServer, chain : ConnectionEventChain, pipeline : ConnectionPipeline) = with(chain) {
 		append(REGISTER, ConnectionRegistrationEvent(channels))
 		append(DEREGISTER, ConnectionDeregistrationEvent(channels))
 		

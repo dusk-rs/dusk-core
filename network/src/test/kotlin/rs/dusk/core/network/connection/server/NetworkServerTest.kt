@@ -13,7 +13,7 @@ import rs.dusk.core.network.connection.factory.server.ServerConnectionFactory
  * @author Tyluur <contact@kiaira.tech>
  * @since March 18, 2020
  */
-class NetworkServerTest {}
+class NetworkServerTest
 
 fun main() {
 	val factory = ServerConnectionFactory()
