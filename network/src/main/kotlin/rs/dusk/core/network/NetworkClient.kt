@@ -16,7 +16,7 @@ import rs.dusk.core.network.connection.ConnectionSettings
  * @author Tyluur <contact@kiaira.tech>
  * @since March 25, 2020
  */
-open class NetworkClient(private val settings : ConnectionSettings) {
+abstract class NetworkClient(private val settings : ConnectionSettings) {
 	
 	private val logger = InlineLogger()
 	
@@ -59,9 +59,6 @@ open class NetworkClient(private val settings : ConnectionSettings) {
 		val (host, port) = settings
 		
 		future = connect(host, port).syncUninterruptibly()
-		logger.info { "Successfully connected to $host on port $port" }
-		
-		connected = true
 		return future!!
 	}
 	

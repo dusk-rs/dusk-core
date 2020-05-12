@@ -1,5 +1,6 @@
 package rs.dusk.core.network.connection.event
 
+import com.github.michaelbull.logging.InlineLogger
 import io.netty.channel.ChannelHandlerContext
 
 /**
@@ -7,6 +8,8 @@ import io.netty.channel.ChannelHandlerContext
  * @since May 02, 2020
  */
 open class ConnectionEventChain {
+	
+	private val logger = InlineLogger()
 	
 	/**
 	 * A map of each [Event Type][ConnectionEventType], which holds a list of the possible [connection events][ConnectionEvent] that it may invoke
@@ -26,7 +29,12 @@ open class ConnectionEventChain {
 	 * This method invokes all [events][ConnectionEvent] for the specified type
 	 */
 	fun handle(type : ConnectionEventType, ctx : ChannelHandlerContext, error : Throwable? = null) {
-		events[type]?.forEach { event ->
+		val connectionEvents = events[type]
+		if (connectionEvents == null) {
+			logger.warn { "No connection events of type [$type] were registered!" }
+			return
+		}
+		connectionEvents.forEach { event ->
 			event.run(ctx, error)
 		}
 	}

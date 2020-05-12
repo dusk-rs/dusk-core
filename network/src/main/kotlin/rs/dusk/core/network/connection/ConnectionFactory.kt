@@ -1,4 +1,4 @@
-package rs.dusk.core.network.connection.factory
+package rs.dusk.core.network.connection
 
 import io.netty.channel.Channel
 import io.netty.channel.group.DefaultChannelGroup

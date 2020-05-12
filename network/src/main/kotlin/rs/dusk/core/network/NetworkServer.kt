@@ -10,14 +10,15 @@ import io.netty.channel.EventLoopGroup
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioServerSocketChannel
+import rs.dusk.core.network.connection.Connectable
 import rs.dusk.core.network.connection.ConnectionSettings
-import rs.dusk.core.network.connection.secure.SslServerInitializer
+import rs.dusk.core.network.security.SslServerInitializer
 
 /**
  * @author Tyluur <contact@kiaira.tech>
  * @since March 18, 2020
  */
-open class NetworkServer(
+abstract class NetworkServer(
 	/**
 	 * The connection settings to use
 	 */
@@ -36,7 +37,7 @@ open class NetworkServer(
 	private val workerGroup : EventLoopGroup = createGroup(
 		false
 	)
-) {
+) : Connectable {
 	
 	private val logger = InlineLogger()
 	

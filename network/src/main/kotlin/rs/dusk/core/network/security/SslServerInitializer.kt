@@ -1,4 +1,4 @@
-package rs.dusk.core.network.connection.secure
+package rs.dusk.core.network.security
 
 import io.netty.channel.Channel
 import io.netty.handler.ssl.IdentityCipherSuiteFilter
