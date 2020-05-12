@@ -10,13 +10,14 @@ import io.netty.channel.ChannelOption.TCP_NODELAY
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioSocketChannel
+import rs.dusk.core.network.connection.Connectable
 import rs.dusk.core.network.connection.ConnectionSettings
 
 /**
  * @author Tyluur <contact@kiaira.tech>
  * @since March 25, 2020
  */
-abstract class NetworkClient(private val settings : ConnectionSettings) {
+abstract class NetworkClient(private val settings : ConnectionSettings) : Connectable {
 	
 	private val logger = InlineLogger()
 	

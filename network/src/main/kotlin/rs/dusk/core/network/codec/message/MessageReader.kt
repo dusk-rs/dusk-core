@@ -9,6 +9,8 @@ import rs.dusk.core.utility.getPipelineContents
 import java.io.IOException
 
 /**
+ * This class is responsible for reading incoming [messages][Message] and passing them to the right [handler][MessageHandler]
+ *
  * @author Tyluur <contact@kiaira.tech>
  * @since March 26, 2020
  */
