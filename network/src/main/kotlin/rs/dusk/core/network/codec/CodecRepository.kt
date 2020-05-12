@@ -32,7 +32,7 @@ class CodecRepository {
 	/**
 	 * The registration of all [codecs][Codec] is done here using reflection
 	 */
-	fun registerAll() {
+	private fun registerAll() {
 		if (registered) {
 			logger.warn { "Attempt to registered all codec components failed, already complete! "}
 			return
