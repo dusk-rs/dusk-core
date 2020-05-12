@@ -4,16 +4,16 @@ import com.github.michaelbull.logging.InlineLogger
 import io.netty.channel.Channel
 import io.netty.channel.ChannelHandlerContext
 import rs.dusk.core.network.connection.Connectable
-import rs.dusk.core.network.connection.event.ConnectionEvent
+import rs.dusk.core.network.connection.event.ChannelEvent
 
 /**
  * @author Tyluur <contact@kiaira.tech>
  * @since May 07, 2020
  */
-class ConnectionRegistrationEvent(
+class ChannelActiveEvent(
 	private val connectable : Connectable,
 	private val collection : MutableCollection<Channel>
-) : ConnectionEvent {
+) : ChannelEvent {
 	
 	private val logger = InlineLogger()
 	

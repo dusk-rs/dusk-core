@@ -4,7 +4,7 @@ package rs.dusk.core.network.connection.event
  * @author Tyluur <contact@kiaira.tech>
  * @since May 02, 2020
  */
-enum class ConnectionEventType {
+enum class ChannelEventType {
 	
 	/**
 	 * When a channel registers to a connection, an event of this type is invoked
@@ -20,7 +20,6 @@ enum class ConnectionEventType {
 	 * When a channel connection is made active, an event of this type is invoked
 	 */
 	ACTIVE,
-	
 	
 	/**
 	 * When a channel connection is made inactive, an event of this type is invoked.

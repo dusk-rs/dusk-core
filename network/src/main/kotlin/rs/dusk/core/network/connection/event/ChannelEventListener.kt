@@ -2,13 +2,13 @@ package rs.dusk.core.network.connection.event
 
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelInboundHandlerAdapter
-import rs.dusk.core.network.connection.event.ConnectionEventType.*
+import rs.dusk.core.network.connection.event.ChannelEventType.*
 
 /**
  * @author Tyluur <contact@kiaira.tech>
  * @since May 02, 2020
  */
-class ConnectionEventListener(private val chain : ConnectionEventChain) : ChannelInboundHandlerAdapter() {
+class ChannelEventListener(private val chain : ChannelEventChain) : ChannelInboundHandlerAdapter() {
 	
 	override fun channelRegistered(ctx : ChannelHandlerContext) {
 		chain.handle(REGISTER, ctx)

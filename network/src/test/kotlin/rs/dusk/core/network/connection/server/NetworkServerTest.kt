@@ -5,8 +5,8 @@ import rs.dusk.core.network.codec.Codec
 import rs.dusk.core.network.codec.message.MessageReader
 import rs.dusk.core.network.connection.ConnectionPipeline
 import rs.dusk.core.network.connection.ConnectionSettings
-import rs.dusk.core.network.connection.event.ConnectionEventChain
-import rs.dusk.core.network.connection.event.ConnectionEventListener
+import rs.dusk.core.network.connection.event.ChannelEventChain
+import rs.dusk.core.network.connection.event.ChannelEventListener
 import rs.dusk.core.network.connection.factory.server.ServerConnectionFactory
 
 /**
@@ -26,7 +26,7 @@ fun main() {
 	val sslInitializer = SslServerInitializer(config) // TODO
 	*/
 	
-	val chain = ConnectionEventChain()
+	val chain = ChannelEventChain()
 	
 	val pipeline = ConnectionPipeline {
 		it.addLast("message.handler", MessageReader(object : Codec() {
@@ -35,7 +35,7 @@ fun main() {
 			}
 			
 		}))
-		it.addLast("connection.listener", ConnectionEventListener(chain))
+		it.addLast("connection.listener", ChannelEventListener(chain))
 	}
 	factory.bind(server, chain, pipeline)
 }
