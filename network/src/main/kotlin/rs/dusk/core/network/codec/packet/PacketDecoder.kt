@@ -25,7 +25,7 @@ abstract class PacketDecoder : ByteToMessageDecoder() {
     /**
      * The read opcode of the packet
      */
-    protected var opcode = -1
+    private var opcode = -1
 
     /**
      * The expected length of the packet
@@ -45,7 +45,7 @@ abstract class PacketDecoder : ByteToMessageDecoder() {
     /**
      * Getting the expected length of a buffer by the opcode identified [opcode]. If th
      */
-    abstract fun getExpectedLength(opcode: Int): Int?
+    abstract fun getExpectedLength(ctx : ChannelHandlerContext, opcode : Int): Int?
 
     override fun decode(ctx: ChannelHandlerContext, buf: ByteBuf, out: MutableList<Any>) {
         if (state == DECODE_OPCODE) {
@@ -54,7 +54,7 @@ abstract class PacketDecoder : ByteToMessageDecoder() {
                 return
             }
             opcode = readOpcode(buf)
-            length = getExpectedLength(opcode) ?: buf.readableBytes()
+            length = getExpectedLength(ctx, opcode) ?: buf.readableBytes()
             type = PacketType.byLength(length)
             state = if (length < 0) DECODE_LENGTH else DECODE_PAYLOAD
             logger.debug { "Identified opcode! [opcode=$opcode, expectedLength=$length, readable=${buf.readableBytes()}, nextState=$state]" }

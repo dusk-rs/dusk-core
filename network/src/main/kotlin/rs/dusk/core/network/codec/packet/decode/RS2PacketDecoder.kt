@@ -1,7 +1,6 @@
 package rs.dusk.core.network.codec.packet.decode
 
 import io.netty.buffer.ByteBuf
-import rs.dusk.core.network.codec.Codec
 import rs.dusk.core.io.crypto.IsaacCipher
 
 /**
@@ -10,8 +9,8 @@ import rs.dusk.core.io.crypto.IsaacCipher
  * @author Tyluur <contact@kiaira.tech>
  * @since February 18, 2020
  */
-class RS2PacketDecoder(private val cipher: IsaacCipher, codec: Codec) : SimplePacketDecoder(codec) {
-
+class RS2PacketDecoder(private val cipher : IsaacCipher) : SimplePacketDecoder() {
+	
     override fun readOpcode(buf: ByteBuf): Int {
         return (buf.readUnsignedByte().toInt() - cipher.nextInt()) and 0xff
     }

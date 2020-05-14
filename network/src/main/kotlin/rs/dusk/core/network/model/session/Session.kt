@@ -5,11 +5,6 @@ import io.netty.channel.ChannelFuture
 import io.netty.channel.ChannelHandler
 import io.netty.channel.ChannelPipeline
 import io.netty.util.AttributeKey
-import rs.dusk.core.network.codec.Codec
-import rs.dusk.core.network.codec.message.MessageEncoder
-import rs.dusk.core.network.codec.message.MessageReader
-import rs.dusk.core.network.codec.message.decode.OpcodeMessageDecoder
-import rs.dusk.core.network.codec.packet.decode.SimplePacketDecoder
 import rs.dusk.core.utility.replace
 import java.net.InetSocketAddress
 
@@ -17,7 +12,7 @@ import java.net.InetSocketAddress
  * @author Tyluur <contact@kiaira.tech>
  * @since 2020-01-31
  */
-open class Session(private val channel : Channel) {
+abstract class Session(private val channel : Channel) {
 	
 	/**
 	 * The ip address of the channel that connected to the server

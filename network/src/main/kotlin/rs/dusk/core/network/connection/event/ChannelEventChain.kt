@@ -31,7 +31,7 @@ open class ChannelEventChain {
 	fun handle(type : ChannelEventType, ctx : ChannelHandlerContext, error : Throwable? = null) {
 		val connectionEvents = events[type]
 		if (connectionEvents == null) {
-			logger.warn { "No connection events of type [$type] were registered!" }
+			logger.warn { "No channel events of type [$type] were registered!" }
 			return
 		}
 		connectionEvents.forEach { event ->

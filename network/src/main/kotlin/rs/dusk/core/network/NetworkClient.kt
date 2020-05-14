@@ -2,6 +2,7 @@ package rs.dusk.core.network
 
 import com.github.michaelbull.logging.InlineLogger
 import io.netty.bootstrap.Bootstrap
+import io.netty.channel.Channel
 import io.netty.channel.ChannelFuture
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.ChannelOption
@@ -10,8 +11,11 @@ import io.netty.channel.ChannelOption.TCP_NODELAY
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioSocketChannel
+import io.netty.util.AttributeKey
+import rs.dusk.core.network.NetworkClient.Companion.CLIENT_KEY
 import rs.dusk.core.network.connection.Connectable
 import rs.dusk.core.network.connection.ConnectionSettings
+import rs.dusk.core.network.model.session.Session
 
 /**
  * @author Tyluur <contact@kiaira.tech>
@@ -72,4 +76,25 @@ abstract class NetworkClient(private val settings : ConnectionSettings) : Connec
 		group.shutdownGracefully()
 	}
 	
+	companion object {
+		/**
+		 * The attribute in the [Channel] that identifies the session
+		 */
+		val CLIENT_KEY : AttributeKey<NetworkClient> = AttributeKey.valueOf("network.client.key")
+	}
+}
+
+/**
+ * Gets the [network client][NetworkClient] attribute of a channel
+ * @receiver Channel
+ */
+fun Channel.getClient() : NetworkClient {
+	return attr(CLIENT_KEY).get()
+}
+
+/**
+ * Sets the [network client][NetworkClient] attribute of a channel
+ */
+fun Channel.setClient(client : NetworkClient) {
+	attr(CLIENT_KEY).set(client)
 }

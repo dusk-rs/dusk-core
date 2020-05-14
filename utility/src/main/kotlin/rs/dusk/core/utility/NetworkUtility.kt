@@ -38,7 +38,7 @@ class NetworkUtility {
  * @receiver Channel
  * @return String
  */
-fun ChannelPipeline.getPipelineContents() : String {
+fun ChannelPipeline.getContents() : String {
 	val list = mutableMapOf<String, String>()
 	forEach { list[it.key] = it.value.javaClass.simpleName }
 	return list.toString()
