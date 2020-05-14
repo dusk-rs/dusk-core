@@ -38,8 +38,7 @@ open class CodecComponents {
 		val decoders = ReflectionUtils.findSubclasses<T>()
 		for (decoder in decoders) {
 			if (!decoder.javaClass.isAnnotationPresent(PacketMetaData::class.java)) {
-				System.err.println("Unable to register decoder ${decoder.javaClass.name}, no meta data defined!")
-				continue
+				throw IllegalStateException("Unable to register decoder ${decoder.javaClass.name}, no meta data defined!")
 			}
 			val metaData = decoder.javaClass.getDeclaredAnnotation(PacketMetaData::class.java)
 			decoder.opcodes = metaData.opcodes
@@ -51,7 +50,7 @@ open class CodecComponents {
 	inline fun <reified T : MessageHandler<*>> bindHandlers() {
 		val handlers = ReflectionUtils.findSubclasses<T>()
 		for (handler in handlers) {
-			val type: KClass<*> = handler.getGenericTypeClass()
+			val type : KClass<*> = handler.getGenericTypeClass()
 			bindHandler(type, handler)
 		}
 	}
@@ -59,7 +58,7 @@ open class CodecComponents {
 	inline fun <reified T : MessageEncoder<*>> bindEncoders() {
 		val encoders = ReflectionUtils.findSubclasses<T>()
 		for (encoder in encoders) {
-			val type: KClass<*> = encoder.getGenericTypeClass()
+			val type : KClass<*> = encoder.getGenericTypeClass()
 			bindEncoder(type, encoder)
 		}
 	}

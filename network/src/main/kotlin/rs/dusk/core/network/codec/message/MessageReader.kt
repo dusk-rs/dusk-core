@@ -5,7 +5,7 @@ import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.SimpleChannelInboundHandler
 import rs.dusk.core.network.codec.getCodec
 import rs.dusk.core.network.model.message.Message
-import rs.dusk.core.utility.getPipelineContents
+import rs.dusk.core.utility.getContents
 import java.io.IOException
 
 /**
@@ -35,7 +35,7 @@ class MessageReader : SimpleChannelInboundHandler<Message>() {
 			
 			logger.debug {
 				"Handled successfully [msg=$msg, codec=${codec.javaClass.simpleName}, handler=${handler.javaClass.simpleName}, pipeline=${ctx.pipeline()
-					.getPipelineContents()}]"
+					.getContents()}]"
 			}
 		} catch (e : IOException) {
 			e.printStackTrace()

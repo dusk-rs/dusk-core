@@ -24,14 +24,10 @@ class CodecRepository {
 	 */
 	private var registered = false
 	
-	init {
-		registerAll()
-	}
-	
 	/**
 	 * The registration of all [codecs][Codec] is done here using reflection
 	 */
-	private fun registerAll() {
+	fun registerAll() {
 		if (registered) {
 			logger.warn { "Attempt to registered all codec components failed, already complete! " }
 			return
@@ -47,7 +43,11 @@ class CodecRepository {
 				information.append(generateStatistics() + (if (iterator.hasNext()) ", " else ""))
 			}
 		}
-		logger.info { "Successfully registered ${codecs.size} codecs successfully in ${stopwatch.elapsed(MILLISECONDS)} ms" }
+		logger.info {
+			"Successfully registered ${codecs.size} codecs successfully in ${stopwatch.elapsed(
+				MILLISECONDS
+			)} ms"
+		}
 		logger.info { "Statistics[decoders, handlers, encoders]:\t$information" }
 		registered = true
 	}
