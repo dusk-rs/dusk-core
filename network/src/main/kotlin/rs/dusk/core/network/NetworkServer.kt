@@ -19,10 +19,6 @@ import rs.dusk.core.network.security.SslServerInitializer
  * @since March 18, 2020
  */
 abstract class NetworkServer(
-	/**
-	 * The connection settings to use
-	 */
-	private val settings : ConnectionSettings,
 	
 	/**
 	 * The event group used for the parent group
@@ -38,6 +34,11 @@ abstract class NetworkServer(
 		false
 	)
 ) : Connectable {
+	
+	/**
+	 * The connection settings to use
+	 */
+	abstract val settings : ConnectionSettings
 	
 	private val logger = InlineLogger()
 	
