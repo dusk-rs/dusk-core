@@ -14,7 +14,7 @@ import java.io.IOException
  * @author Tyluur <contact@kiaira.tech>
  * @since March 26, 2020
  */
-class MessageReader : SimpleChannelInboundHandler<Message>() {
+open class MessageReader : SimpleChannelInboundHandler<Message>() {
 	
 	private val logger = InlineLogger()
 	

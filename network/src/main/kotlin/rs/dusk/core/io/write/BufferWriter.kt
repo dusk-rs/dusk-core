@@ -56,33 +56,32 @@ open class BufferWriter(
     override fun writeBits(bitCount: Int, value: Int): BufferWriter {
         var numBits = bitCount
 
-        var bytePos = bitIndex shr 3
+        var byteIndex = bitIndex shr 3
         var bitOffset = 8 - (bitIndex and 7)
         bitIndex += numBits
 
-        var requiredSpace = bytePos - buffer.writerIndex() + 1
-        requiredSpace += (numBits + 7) / 8
-        buffer.ensureWritable(requiredSpace)
+        buffer.ensureWritable((byteIndex - buffer.writerIndex() + 1) + (numBits + 7) / 8)
 
+        var tmp: Int
+        var max: Int
         while (numBits > bitOffset) {
-            var tmp = buffer.getByte(bytePos).toInt()
-            tmp = tmp and BIT_MASKS[bitOffset].inv()
-            tmp = tmp or (value shr numBits - bitOffset and BIT_MASKS[bitOffset])
-            buffer.setByte(bytePos++, tmp)
+            tmp = buffer.getByte(byteIndex).toInt()
+            max = BIT_MASKS[bitOffset]
+            tmp = tmp and max.inv() or (value shr numBits - bitOffset and max)
+            buffer.setByte(byteIndex++, tmp)
             numBits -= bitOffset
             bitOffset = 8
         }
+
+        tmp = buffer.getByte(byteIndex).toInt()
+        max = BIT_MASKS[numBits]
         if (numBits == bitOffset) {
-            var tmp = buffer.getByte(bytePos).toInt()
-            tmp = tmp and BIT_MASKS[bitOffset].inv()
-            tmp = tmp or (value and BIT_MASKS[bitOffset])
-            buffer.setByte(bytePos, tmp)
+            tmp = tmp and max.inv() or (value and max)
         } else {
-            var tmp = buffer.getByte(bytePos).toInt()
-            tmp = tmp and (BIT_MASKS[numBits] shl bitOffset - numBits).inv()
-            tmp = tmp or (value and BIT_MASKS[numBits] shl bitOffset - numBits)
-            buffer.setByte(bytePos, tmp)
+            tmp = tmp and (max shl bitOffset - numBits).inv()
+            tmp = tmp or (value and max shl bitOffset - numBits)
         }
+        buffer.setByte(byteIndex, tmp)
         return this
     }
 
@@ -102,38 +101,23 @@ open class BufferWriter(
     }
 
     override fun write(type: DataType, value: Number, modifier: Modifier, order: Endian) {
-        val longValue = value.toLong()
-        when (order) {
-            Endian.BIG, Endian.LITTLE -> {
-                val range = if (order == Endian.LITTLE) 0 until type.length else type.length - 1 downTo 0
-                for (i in range) {
-                    if (i == 0 && modifier != Modifier.NONE) {
-                        when (modifier) {
-                            Modifier.ADD -> buffer.writeByte((longValue + 128).toByte().toInt())
-                            Modifier.INVERSE -> buffer.writeByte((-longValue).toByte().toInt())
-                            Modifier.SUBTRACT -> buffer.writeByte((128 - longValue).toByte().toInt())
-                            else -> throw IllegalArgumentException("Unknown byte modifier")
-                        }
-                    } else {
-                        buffer.writeByte((longValue shr i * 8).toByte().toInt())
-                    }
-                }
+        if (order == Endian.MIDDLE) {
+            check(modifier == Modifier.NONE || modifier == Modifier.INVERSE) {
+                "Middle endian doesn't support variable modifier $modifier"
             }
-            Endian.MIDDLE -> {
-                if (modifier != Modifier.NONE && modifier != Modifier.INVERSE) {
-                    throw IllegalArgumentException("Middle endian doesn't support variable modifier $modifier")
-                }
-
-                if (type != DataType.INT) {
-                    throw IllegalArgumentException("Middle endian can only be used with an integer")
-                }
-
-                val range = listOf(8, 0, 24, 16)
-                //Reverse range if inverse modifier
-                for (i in if (modifier == Modifier.NONE) range else range.reversed()) {
-                    buffer.writeByte((longValue shr i).toByte().toInt())
-                }
+            check(type == DataType.INT) {
+                "Middle endian can only be used with an integer"
             }
+        }
+
+        for (index in order.getRange(modifier, type.byteCount)) {
+            val modifiedValue = when (if (index == 0 && order != Endian.MIDDLE) modifier else Modifier.NONE) {
+                Modifier.ADD -> value.toInt() + 128
+                Modifier.INVERSE -> -value.toInt()
+                Modifier.SUBTRACT -> 128 - value.toInt()
+                else -> (value.toLong() shr index * 8).toInt()
+            }
+            buffer.writeByte(modifiedValue)
         }
     }
 
@@ -144,14 +128,12 @@ open class BufferWriter(
     }
 
     companion object {
-        /**
-         * Bit masks for [writeBits]
-         */
         private val BIT_MASKS = IntArray(32)
 
         init {
-            for (i in BIT_MASKS.indices)
+            for (i in BIT_MASKS.indices) {
                 BIT_MASKS[i] = (1 shl i) - 1
+            }
         }
     }
 }

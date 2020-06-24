@@ -86,7 +86,7 @@ open class BufferReader(override val buffer: ByteBuffer) : Reader {
     override fun readSigned(type: DataType, modifier: Modifier, order: Endian): Long {
         var longValue = read(type, modifier, order)
         if (type != DataType.LONG) {
-            val max = 2.0.pow(type.length * 8.0 - 1).toInt()
+            val max = 2.0.pow(type.byteCount * 8.0 - 1).toInt()
             if (longValue > max - 1) {
                 longValue -= max * 2L
             }
@@ -110,48 +110,30 @@ open class BufferReader(override val buffer: ByteBuffer) : Reader {
      * @return The read value
      */
     private fun read(type: DataType, modifier: Modifier, order: Endian): Long {
-        //Check bytes are available
-        if (buffer.remaining() < type.length) {
-            throw IndexOutOfBoundsException("Not enough allocated buffer remaining $type.")
+        check(buffer.remaining() >= type.byteCount) {
+            "Not enough allocated buffer remaining $type."
+        }
+
+        if (order == Endian.MIDDLE) {
+            check(modifier == Modifier.NONE || modifier == Modifier.INVERSE) {
+                "Middle endian doesn't support variable modifier $modifier"
+            }
+            check(type == DataType.INT) {
+                "Middle endian can only be used with an integer"
+            }
         }
 
         var longValue: Long = 0
-        when (order) {
-            Endian.BIG, Endian.LITTLE -> {
-                //For by length
-                val range = if (order == Endian.LITTLE) 0 until type.length else type.length - 1 downTo 0
-                var read: Long
-                for (i in range) {
-                    //If first and has a modifier
-                    read = if (i == 0 && modifier != Modifier.NONE) {
-                                //Read with variable modifier transform
-                                when (modifier) {
-                                    Modifier.ADD -> buffer.get() - 128
-                                    Modifier.INVERSE -> -buffer.get()
-                                    Modifier.SUBTRACT -> 128 - buffer.get()
-                                    else -> throw IllegalArgumentException("Unknown byte modifier")
-                                } and 0xFF
-                            } else {
-                                //Read with position shift
-                                buffer.get().toInt() and 0xFF shl i * 8
-                            }.toLong()
-                    longValue = longValue or read
-                }
+        var read: Int
+        for (index in order.getRange(modifier, type.byteCount)) {
+            read = buffer.get().toInt()
+            read = when (if(index == 0 && order != Endian.MIDDLE) modifier else Modifier.NONE) {
+                Modifier.ADD -> read - 128 and 0xff
+                Modifier.INVERSE -> -read and 0xff
+                Modifier.SUBTRACT -> 128 - read and 0xff
+                else -> read and 0xff shl index * 8
             }
-            Endian.MIDDLE -> {
-                if (type != DataType.INT) {
-                    throw IllegalArgumentException("Middle endian can only be used with an integer")
-                }
-
-                if (modifier != Modifier.NONE && modifier != Modifier.INVERSE) {
-                    throw IllegalArgumentException("Middle endian doesn't support variable modifier $modifier")
-                }
-
-                //Reverse range if inverse modifier
-                for (i in if (modifier == Modifier.NONE) middleEndianRange else middleEndianRange.reversed()) {
-                    longValue = longValue or (buffer.get().toInt() and 0xFF shl i).toLong()
-                }
-            }
+            longValue = longValue or read.toLong()
         }
         return longValue
     }
@@ -192,7 +174,6 @@ open class BufferReader(override val buffer: ByteBuffer) : Reader {
     }
 
     companion object {
-        private val middleEndianRange = listOf(8, 0, 24, 16)
         /**
          * Bit masks for [readBits]
          */

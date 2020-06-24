@@ -5,7 +5,7 @@ package rs.dusk.core.io
  * @author Tyluur <contact@kiaira.tech>
  * @since February 18, 2020
  */
-enum class DataType(val length: Int) {
+enum class DataType(val byteCount: Int) {
     BYTE(1),
     SHORT(2),
     MEDIUM(3),
