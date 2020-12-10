@@ -68,6 +68,12 @@ interface Reader {
     fun readMedium() = readSigned(DataType.MEDIUM).toInt()
 
     /**
+     * Reads a 3-byte integer.
+     * @return [Int]
+     */
+    fun readUnsignedMedium() = readUnsigned(DataType.MEDIUM).toInt()
+
+    /**
      * Reads a integer.
      * @param type The variable read type
      * @param order The read order

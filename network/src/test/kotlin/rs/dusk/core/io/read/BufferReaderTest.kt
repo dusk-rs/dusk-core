@@ -133,10 +133,19 @@ internal class BufferReaderTest {
     @Test
     fun `Read medium`() {
         //Given
-        packet(0, 0, 2, -1, -1, -2)
+        packet(0, 0, 2, -1, -1, -2, -1, 0, -1)
         //Then
         assertEquals(2, buffer.readMedium())
         assertEquals(-2, buffer.readMedium())
+        assertEquals(-65281, buffer.readMedium())
+    }
+
+    @Test
+    fun `Read unsigned medium`() {
+        //Given
+        packet(-1, 0, -1)
+        //Then
+        assertEquals(16711935, buffer.readUnsignedMedium())
     }
 
     @Test
