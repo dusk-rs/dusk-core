@@ -14,13 +14,12 @@ import io.netty.channel.socket.nio.NioSocketChannel
 import io.netty.util.AttributeKey
 import rs.dusk.core.network.NetworkClient.Companion.CLIENT_KEY
 import rs.dusk.core.network.connection.Connectable
-import rs.dusk.core.network.connection.ConnectionSettings
 
 /**
  * @author Tyluur <contact@kiaira.tech>
  * @since March 25, 2020
  */
-abstract class NetworkClient(private val settings : ConnectionSettings) : Connectable {
+abstract class NetworkClient(val host : String, val port : Int) : Connectable {
 	
 	private val logger = InlineLogger()
 	
@@ -60,8 +59,6 @@ abstract class NetworkClient(private val settings : ConnectionSettings) : Connec
 	 * Connecting to the server
 	 */
 	fun connect() : ChannelFuture = with(bootstrap) {
-		val (host, port) = settings
-		
 		future = connect(host, port).syncUninterruptibly()
 		return future!!
 	}
