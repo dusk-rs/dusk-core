@@ -1,7 +1,7 @@
-package rs.dusk.core.network.connection.event.type
+package rs.dusk.core.network.channel.event.type
 
 import io.netty.channel.ChannelHandlerContext
-import rs.dusk.core.network.connection.event.ChannelEvent
+import rs.dusk.core.network.channel.event.ChannelEvent
 
 /**
  * @author Tyluur <contact@kiaira.tech>

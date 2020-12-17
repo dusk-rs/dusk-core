@@ -12,7 +12,7 @@ import java.net.InetSocketAddress
  * @author Tyluur <contact@kiaira.tech>
  * @since 2020-01-31
  */
-abstract class Session(private val channel : Channel) {
+open class Session(private val channel : Channel) {
 	
 	/**
 	 * The ip address of the channel that connected to the server

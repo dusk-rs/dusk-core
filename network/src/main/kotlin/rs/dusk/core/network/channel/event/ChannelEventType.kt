@@ -1,4 +1,4 @@
-package rs.dusk.core.network.connection.event
+package rs.dusk.core.network.channel.event
 
 /**
  * @author Tyluur <contact@kiaira.tech>

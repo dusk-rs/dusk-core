@@ -78,19 +78,3 @@ abstract class Codec {
 		}
 	}
 }
-
-/**
- * Getting the codec of the channel
- * @receiver Channel
- */
-fun Channel.getCodec() : Codec? {
-	return attr(CODEC_KEY).get()
-}
-
-/**
- * Setting the codec of the channel
- * @receiver Channel
- */
-fun Channel.setCodec(codec : Codec) {
-	attr(CODEC_KEY).set(codec)
-}

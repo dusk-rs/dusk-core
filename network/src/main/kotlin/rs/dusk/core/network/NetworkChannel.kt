@@ -1,6 +1,7 @@
 package rs.dusk.core.network
 
 import io.netty.channel.Channel
+import rs.dusk.core.network.codec.Codec
 
 /**
  * Gets the [network client][NetworkClient] attribute of a channel
@@ -15,4 +16,20 @@ fun Channel.getClient() : NetworkClient {
  */
 fun Channel.setClient(client : NetworkClient) {
 	attr(NetworkClient.CLIENT_KEY).set(client)
+}
+
+/**
+ * Getting the codec of the channel
+ * @receiver Channel
+ */
+fun Channel.getCodec() : Codec? {
+	return attr(Codec.CODEC_KEY).get()
+}
+
+/**
+ * Setting the codec of the channel
+ * @receiver Channel
+ */
+fun Channel.setCodec(codec : Codec) {
+	attr(Codec.CODEC_KEY).set(codec)
 }

@@ -3,11 +3,10 @@ package rs.dusk.core.network
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.socket.SocketChannel
-import rs.dusk.core.network.connection.ConnectionPipeline
-import rs.dusk.core.network.connection.event.ChannelEventChain
-import rs.dusk.core.network.connection.event.ChannelEventListener
-import rs.dusk.core.network.connection.event.ChannelEventType.*
-import rs.dusk.core.network.connection.event.type.ChannelExceptionEvent
+import rs.dusk.core.network.channel.event.ChannelEventChain
+import rs.dusk.core.network.channel.event.ChannelEventListener
+import rs.dusk.core.network.channel.event.ChannelEventType.*
+import rs.dusk.core.network.channel.event.type.ChannelExceptionEvent
 import rs.dusk.core.network.message.NetworkMessageReader
 import rs.dusk.core.network.message.decode.OpcodeMessageDecoder
 import rs.dusk.core.network.message.encode.GenericMessageEncoder
@@ -48,7 +47,7 @@ interface Connectable {
 		val chain = ChannelEventChain().apply {
 			append(EXCEPTION, ChannelExceptionEvent())
 		}
-		val pipeline = ConnectionPipeline {
+		val pipeline = NetworkPipeline {
 			it.addLast("packet.decoder", SimplePacketDecoder())
 			it.addLast("message.decoder", OpcodeMessageDecoder())
 			it.addLast("message.reader", NetworkMessageReader())
