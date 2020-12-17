@@ -1,6 +1,7 @@
-package rs.dusk.core.network
+package rs.dusk.core.network.channel
 
 import io.netty.channel.Channel
+import rs.dusk.core.network.NetworkClient
 import rs.dusk.core.network.codec.Codec
 
 /**

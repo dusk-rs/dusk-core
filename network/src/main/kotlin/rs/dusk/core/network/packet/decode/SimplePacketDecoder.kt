@@ -3,7 +3,7 @@ package rs.dusk.core.network.packet.decode
 import com.github.michaelbull.logging.InlineLogger
 import io.netty.buffer.ByteBuf
 import io.netty.channel.ChannelHandlerContext
-import rs.dusk.core.network.codec.getCodec
+import rs.dusk.core.network.channel.getCodec
 
 /**
  * Handling the decoding of a simple packet, which is a packet whose contents are [opcode, buffer]

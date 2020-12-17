@@ -4,7 +4,7 @@ import com.github.michaelbull.logging.InlineLogger
 import io.netty.channel.ChannelHandler
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.MessageToMessageDecoder
-import rs.dusk.core.network.codec.getCodec
+import rs.dusk.core.network.channel.getCodec
 import rs.dusk.core.network.packet.access.PacketReader
 
 /**

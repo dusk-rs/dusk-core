@@ -3,7 +3,7 @@ package rs.dusk.core.network.message
 import com.github.michaelbull.logging.InlineLogger
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.SimpleChannelInboundHandler
-import rs.dusk.core.network.codec.getCodec
+import rs.dusk.core.network.channel.getCodec
 import rs.dusk.core.utility.getContents
 import java.io.IOException
 
