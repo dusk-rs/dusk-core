@@ -63,6 +63,7 @@ allprojects {
 
         //Testing
         testImplementation(group = "org.junit.jupiter", name = "junit-jupiter-api", version = "5.5.2")
+	    testImplementation(group = "org.koin", name = "koin-test", version = koinVersion)
 
     }
 
