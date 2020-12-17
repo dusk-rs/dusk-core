@@ -1,8 +1,6 @@
-package rs.dusk.core.network.codec.message
+package rs.dusk.core.network.message
 
-import io.netty.channel.ChannelHandler
-import io.netty.channel.ChannelHandlerContext
-import rs.dusk.core.network.model.message.Message
+import rs.dusk.core.network.packet.access.PacketWriter
 import java.lang.reflect.ParameterizedType
 import kotlin.reflect.KClass
 
@@ -10,12 +8,12 @@ import kotlin.reflect.KClass
  * @author Tyluur <contact@kiaira.tech>
  * @since February 18, 2020
  */
-abstract class MessageHandler<M : Message> {
+abstract class MessageEncoder<M : Message> {
 	
 	/**
-	 * Handles what to do with message [M]
+	 * Encodes a message into a packet builder
 	 */
-	abstract fun handle(ctx : ChannelHandlerContext, msg : M) : Any
+	abstract fun encode(builder : PacketWriter, msg : M) : Any
 	
 	@Suppress("UNCHECKED_CAST")
 	fun getGenericTypeClass() : KClass<M> {

@@ -1,4 +1,4 @@
-package rs.dusk.core.network.model.packet
+package rs.dusk.core.network.packet
 
 /**
  * @author Tyluur <contact@kiaira.tech>

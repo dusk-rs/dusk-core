@@ -2,11 +2,11 @@ package rs.dusk.core.network.codec
 
 import io.netty.channel.Channel
 import io.netty.util.AttributeKey
-import rs.dusk.core.network.codec.NetworkCodec.Companion.CODEC_KEY
-import rs.dusk.core.network.codec.message.MessageDecoder
-import rs.dusk.core.network.codec.message.MessageEncoder
-import rs.dusk.core.network.codec.message.MessageHandler
-import rs.dusk.core.network.model.message.Message
+import rs.dusk.core.network.codec.Codec.Companion.CODEC_KEY
+import rs.dusk.core.network.message.MessageDecoder
+import rs.dusk.core.network.message.MessageEncoder
+import rs.dusk.core.network.message.MessageHandler
+import rs.dusk.core.network.message.Message
 import rs.dusk.core.utility.ReflectionUtils
 import kotlin.reflect.KClass
 
@@ -14,15 +14,15 @@ import kotlin.reflect.KClass
  * @author Tyluur <itstyluur@gmail.com>
  * @since February 18, 2020
  */
-abstract class NetworkCodec {
+abstract class Codec {
 	
 	/**
-	 * The [codec repository][NetworkCodecRepository] for this codec, which contains the collections used for codec functions.
+	 * The [codec repository][CodecRepository] for this codec, which contains the collections used for codec functions.
 	 */
-	private val repository = NetworkCodecRepository()
+	private val repository = CodecRepository()
 	
 	/**
-	 * The registration of all [components][NetworkCodecRepository] of this codec must be done here.
+	 * The registration of all [components][CodecRepository] of this codec must be done here.
 	 */
 	abstract fun register()
 	
@@ -54,19 +54,19 @@ abstract class NetworkCodec {
 	
 	companion object {
 		/**
-		 * The attribute in the [channel][Channel] that identifies the [codec][NetworkCodec]
+		 * The attribute in the [channel][Channel] that identifies the [codec][Codec]
 		 */
-		val CODEC_KEY : AttributeKey<NetworkCodec> = AttributeKey.valueOf("codec.key")
+		val CODEC_KEY : AttributeKey<Codec> = AttributeKey.valueOf("codec.key")
 		
 		
 		/**
-		 * This method calls the [register][NetworkCodec.register] function for all classes of type [NetworkCodec].
+		 * This method calls the [register][Codec.register] function for all classes of type [Codec].
 		 *
-		 * @return The total amount of times the [register][NetworkCodec.register] function was called
+		 * @return The total amount of times the [register][Codec.register] function was called
 		 */
 		fun registerAll() : Int {
 			var count = 0
-			val codecs = ReflectionUtils.findSubclasses<NetworkCodec>()
+			val codecs = ReflectionUtils.findSubclasses<Codec>()
 			val iterator = codecs.iterator()
 			while (iterator.hasNext()) {
 				with(iterator.next()) {
@@ -83,7 +83,7 @@ abstract class NetworkCodec {
  * Getting the codec of the channel
  * @receiver Channel
  */
-fun Channel.getCodec() : NetworkCodec? {
+fun Channel.getCodec() : Codec? {
 	return attr(CODEC_KEY).get()
 }
 
@@ -91,6 +91,6 @@ fun Channel.getCodec() : NetworkCodec? {
  * Setting the codec of the channel
  * @receiver Channel
  */
-fun Channel.setCodec(codec : NetworkCodec) {
+fun Channel.setCodec(codec : Codec) {
 	attr(CODEC_KEY).set(codec)
 }

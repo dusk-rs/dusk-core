@@ -1,4 +1,4 @@
-package rs.dusk.core.network.codec.message.encode
+package rs.dusk.core.network.message.encode
 
 import com.github.michaelbull.logging.InlineLogger
 import io.netty.buffer.ByteBuf
@@ -6,9 +6,9 @@ import io.netty.channel.ChannelHandler
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.MessageToByteEncoder
 import rs.dusk.core.network.codec.getCodec
-import rs.dusk.core.network.codec.message.MessageEncoder
-import rs.dusk.core.network.codec.packet.access.PacketBuilder
-import rs.dusk.core.network.model.message.Message
+import rs.dusk.core.network.message.MessageEncoder
+import rs.dusk.core.network.packet.access.PacketBuilder
+import rs.dusk.core.network.message.Message
 
 /**
  * Encoder for writing messages to byte data

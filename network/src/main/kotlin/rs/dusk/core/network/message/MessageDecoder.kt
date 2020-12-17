@@ -1,8 +1,6 @@
-package rs.dusk.core.network.codec.message
+package rs.dusk.core.network.message
 
-import io.netty.channel.ChannelHandler
-import rs.dusk.core.network.codec.packet.access.PacketReader
-import rs.dusk.core.network.model.message.Message
+import rs.dusk.core.network.packet.access.PacketReader
 import java.util.*
 
 /**

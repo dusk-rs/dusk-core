@@ -1,4 +1,4 @@
-package rs.dusk.core.network.model.packet
+package rs.dusk.core.network.packet
 
 /**
  * An enumeration which contains the different types of packets.

@@ -18,7 +18,7 @@ class ChannelInactiveEvent(
 	private val logger = InlineLogger()
 	
 	override fun run(ctx : ChannelHandlerContext, cause : Throwable?) {
-		connectable.onDisconnect()
+		connectable.onDisconnect(ctx)
 		
 		logger.info { "A connection has been de-registered and removed from total list!" }
 		

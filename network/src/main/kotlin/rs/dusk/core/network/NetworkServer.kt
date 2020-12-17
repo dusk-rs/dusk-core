@@ -20,6 +20,11 @@ import rs.dusk.core.network.connection.Connectable
 abstract class NetworkServer : Connectable {
 	
 	/**
+	 * The execution function of the server
+	 */
+	abstract fun listen()
+	
+	/**
 	 * If the server is running
 	 */
 	var running = false

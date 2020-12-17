@@ -1,11 +1,11 @@
-package rs.dusk.core.network.codec.message.decode
+package rs.dusk.core.network.message.decode
 
 import com.github.michaelbull.logging.InlineLogger
 import io.netty.channel.ChannelHandler
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.MessageToMessageDecoder
 import rs.dusk.core.network.codec.getCodec
-import rs.dusk.core.network.codec.packet.access.PacketReader
+import rs.dusk.core.network.packet.access.PacketReader
 
 /**
  * Packets that are identified with an opcode must be decoded into a [Message] with this decoder

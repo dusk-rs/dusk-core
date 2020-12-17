@@ -18,7 +18,7 @@ class ChannelActiveEvent(
 	private val logger = InlineLogger()
 	
 	override fun run(ctx : ChannelHandlerContext, cause : Throwable?) {
-		connectable.onConnect()
+		connectable.onConnect(ctx)
 		
 		logger.debug { "A connection has been registered and added to the set of live connections!" }
 		

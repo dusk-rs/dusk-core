@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test
 import rs.dusk.core.io.Endian
 import rs.dusk.core.io.Modifier
 import rs.dusk.core.io.write.BufferWriter
-import rs.dusk.core.network.codec.packet.access.PacketReader
 
 internal class BufferWriterTest {
 

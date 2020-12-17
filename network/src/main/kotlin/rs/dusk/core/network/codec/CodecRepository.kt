@@ -1,23 +1,21 @@
 package rs.dusk.core.network.codec
 
 import com.github.michaelbull.logging.InlineLogger
-import rs.dusk.core.network.codec.message.MessageDecoder
-import rs.dusk.core.network.codec.message.MessageEncoder
-import rs.dusk.core.network.codec.message.MessageHandler
-import rs.dusk.core.network.model.packet.PacketMetaData
+import rs.dusk.core.network.message.MessageDecoder
+import rs.dusk.core.network.message.MessageEncoder
+import rs.dusk.core.network.message.MessageHandler
+import rs.dusk.core.network.packet.PacketMetaData
 import rs.dusk.core.utility.ReflectionUtils
 import kotlin.reflect.KClass
 
 /**
- * The [codec][NetworkCodec] is composed of [decoders][MessageDecoder], [handlers][MessageHandler], and [encoders][MessageEncoder].
+ * The [codec][Codec] is composed of [decoders][MessageDecoder], [handlers][MessageHandler], and [encoders][MessageEncoder].
  * This class provides the storage and binding of said components.
  *
  * @author Tyluur <contact@kiaira.tech>
  * @since February 18, 2020
  */
-class NetworkCodecRepository {
-	
-	private val logger = InlineLogger()
+class CodecRepository {
 	
 	/**
 	 * The map of decoders, which are of type D, and are specified by the opcode of the message they are handling

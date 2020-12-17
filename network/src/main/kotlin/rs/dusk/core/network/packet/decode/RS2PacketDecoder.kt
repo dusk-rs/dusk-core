@@ -1,4 +1,4 @@
-package rs.dusk.core.network.codec.packet.decode
+package rs.dusk.core.network.packet.decode
 
 import io.netty.buffer.ByteBuf
 import rs.dusk.core.io.crypto.IsaacCipher

@@ -1,4 +1,4 @@
-package rs.dusk.core.network.model.message
+package rs.dusk.core.network.message
 
 /**
  * The base class of all messages

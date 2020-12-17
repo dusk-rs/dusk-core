@@ -1,10 +1,9 @@
-package rs.dusk.core.network.codec.packet.decode
+package rs.dusk.core.network.packet.decode
 
 import com.github.michaelbull.logging.InlineLogger
 import io.netty.buffer.ByteBuf
 import io.netty.channel.ChannelHandlerContext
 import rs.dusk.core.network.codec.getCodec
-import rs.dusk.core.network.codec.packet.PacketDecoder
 
 /**
  * Handling the decoding of a simple packet, which is a packet whose contents are [opcode, buffer]
@@ -22,7 +21,7 @@ open class SimplePacketDecoder : PacketDecoder() {
 	
 	override fun getExpectedLength(ctx : ChannelHandlerContext, opcode : Int) : Int? {
 		val codec = ctx.channel().getCodec()
-			?: throw IllegalStateException("Unable to extract codec from channel - undefined!")
+			?: throw IllegalStateException("Unable to extract codec from channel - undefined [solution - please call ctx.channel().setCodec()]")
 		
 		val decoder = codec.decoder(opcode)
 		if (decoder == null) {

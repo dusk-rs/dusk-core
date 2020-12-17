@@ -22,9 +22,12 @@ import rs.dusk.core.network.connection.Connectable
  * @author Tyluur <itstyluur@gmail.com>
  * @since March 25, 2020
  */
-abstract class NetworkClient(val host : String) : Connectable {
+abstract class NetworkClient(private val host : String) : Connectable {
 	
-	private val logger = InlineLogger()
+	/**
+	 * The execution function of the client
+	 */
+	abstract fun connect()
 	
 	/**
 	 * Whether we are connected to a server
@@ -46,6 +49,8 @@ abstract class NetworkClient(val host : String) : Connectable {
 	 */
 	private var future : ChannelFuture? = null
 	
+	private val logger = InlineLogger()
+	
 	/**
 	 * The options used for the connection are configured here, as well as the [ChannelInitializer]
 	 */
@@ -62,8 +67,9 @@ abstract class NetworkClient(val host : String) : Connectable {
 	 * Connecting to the server
 	 */
 	override fun start(port : Int) : ChannelFuture = with(bootstrap) {
-		future = connect(host, port).syncUninterruptibly()
-		return future!!
+		val future = connect(host, port)
+		connected = true
+		return future.syncUninterruptibly()!!
 	}
 	
 	/**
@@ -73,6 +79,7 @@ abstract class NetworkClient(val host : String) : Connectable {
 		future?.channel()?.disconnect()
 		future?.channel()?.close()
 		group.shutdownGracefully()
+		connected = false
 	}
 	
 	companion object {

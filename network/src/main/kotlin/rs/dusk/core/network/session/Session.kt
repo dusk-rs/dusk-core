@@ -1,4 +1,4 @@
-package rs.dusk.core.network.model.session
+package rs.dusk.core.network.session
 
 import io.netty.channel.Channel
 import io.netty.channel.ChannelFuture
