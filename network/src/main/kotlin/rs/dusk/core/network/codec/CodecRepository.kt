@@ -1,66 +1,93 @@
 package rs.dusk.core.network.codec
 
 import com.github.michaelbull.logging.InlineLogger
-import com.google.common.base.Stopwatch
+import rs.dusk.core.network.codec.message.MessageDecoder
+import rs.dusk.core.network.codec.message.MessageEncoder
+import rs.dusk.core.network.codec.message.MessageHandler
+import rs.dusk.core.network.model.packet.PacketMetaData
 import rs.dusk.core.utility.ReflectionUtils
-import java.util.concurrent.TimeUnit.MILLISECONDS
 import kotlin.reflect.KClass
 
 /**
+ * The [codec][NetworkCodec] is composed of [decoders][MessageDecoder], [handlers][MessageHandler], and [encoders][MessageEncoder].
+ * This class provides the storage and binding of said components.
+ *
  * @author Tyluur <contact@kiaira.tech>
- * @since May 02, 2020
+ * @since February 18, 2020
  */
-class CodecRepository {
+open class CodecRepository {
 	
 	private val logger = InlineLogger()
 	
 	/**
-	 * The collection of all [codecs][Codec], identifiable by class name
+	 * The map of decoders, which are of type D, and are specified by the opcode of the message they are handling
 	 */
-	private val map = HashMap<KClass<*>, Codec>()
+	val decoders = HashMap<Int, MessageDecoder<*>>()
 	
 	/**
-	 * A flag for registration, to avoid duplicate [registration][registerAll]
+	 * The map of handlers, which are specified by the class they are handling (a subclass of [Message])
 	 */
-	private var registered = false
+	val handlers = HashMap<KClass<*>, MessageHandler<*>>()
 	
 	/**
-	 * The registration of all [codecs][Codec] is done here using reflection
+	 * The map of message encoders, which are specified by the class they are handling (a subclass of [Message])
 	 */
-	fun registerAll() {
-		if (registered) {
-			logger.warn { "Attempt to registered all codec components failed, already complete! " }
-			return
-		}
-		val stopwatch = Stopwatch.createStarted()
-		val codecs = ReflectionUtils.findSubclasses<Codec>()
-		val information = StringBuilder()
-		val iterator = codecs.iterator()
-		while (iterator.hasNext()) {
-			with(iterator.next()) {
-				register()
-				map[javaClass.kotlin] = this
-				information.append(generateStatistics() + (if (iterator.hasNext()) ", " else ""))
+	val encoders = HashMap<KClass<*>, MessageEncoder<*>>()
+	
+	inline fun <reified T : MessageDecoder<*>> bindDecoders() {
+		val decoders = ReflectionUtils.findSubclasses<T>()
+		for (decoder in decoders) {
+			if (!decoder.javaClass.isAnnotationPresent(PacketMetaData::class.java)) {
+				throw IllegalStateException("Unable to register decoder ${decoder.javaClass.name}, no meta data defined!")
 			}
+			val metaData = decoder.javaClass.getDeclaredAnnotation(PacketMetaData::class.java)
+			decoder.opcodes = metaData.opcodes
+			decoder.length = metaData.length
+			bindDecoder(decoder)
 		}
-		logger.info {
-			"Successfully registered ${codecs.size} codecs successfully in ${stopwatch.elapsed(
-				MILLISECONDS
-			)} ms"
-		}
-		logger.info { "Statistics[decoders, handlers, encoders]:\t$information" }
-		registered = true
 	}
 	
-	/**
-	 * Gets a [codec][Codec] from the [codec map][map]
-	 */
-	fun get(clazz : KClass<*>) : Codec {
-		if (map.containsKey(clazz)) {
-			return map[clazz]!!
-		} else {
-			throw IllegalStateException("Unable to find codec from class [$clazz]")
+	inline fun <reified T : MessageHandler<*>> bindHandlers() {
+		val handlers = ReflectionUtils.findSubclasses<T>()
+		for (handler in handlers) {
+			val type : KClass<*> = handler.getGenericTypeClass()
+			bindHandler(type, handler)
 		}
+	}
+	
+	inline fun <reified T : MessageEncoder<*>> bindEncoders() {
+		val encoders = ReflectionUtils.findSubclasses<T>()
+		for (encoder in encoders) {
+			val type : KClass<*> = encoder.getGenericTypeClass()
+			bindEncoder(type, encoder)
+		}
+	}
+	
+	fun bindDecoder(decoder : MessageDecoder<*>) {
+		decoder.opcodes?.forEach { opcode ->
+			if (decoders[opcode] != null) {
+				throw IllegalArgumentException("Cannot have duplicate decoders $decoder $opcode")
+			}
+			decoders[opcode] = decoder
+		}
+	}
+	
+	fun bindEncoder(type : KClass<*>, encoder : MessageEncoder<*>) {
+		if (encoders.contains(type)) {
+			throw IllegalArgumentException("Cannot have duplicate encoders $type $encoder")
+		}
+		encoders[type] = encoder
+	}
+	
+	fun bindHandler(type : KClass<*>, encoder : MessageHandler<*>) {
+		if (handlers.contains(type)) {
+			throw IllegalArgumentException("Cannot have duplicate handlers $type $encoder")
+		}
+		handlers[type] = encoder
+	}
+	
+	fun generateStatistics() : String {
+		return "${javaClass.simpleName}[${decoders.size}, ${handlers.size}, ${encoders.size}]"
 	}
 	
 }
