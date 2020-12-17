@@ -2,9 +2,9 @@ package rs.dusk.core.network.packet.access
 
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
-import rs.dusk.core.io.write.BufferWriter
+import rs.dusk.core.network.buffer.write.BufferWriter
 import rs.dusk.core.network.packet.PacketType
-import rs.dusk.core.io.crypto.IsaacCipher
+import rs.dusk.core.network.buffer.cipher.isaac.IsaacCipher
 
 /**
  * All functions relative to writing directly to a packet are done by this class

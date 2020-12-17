@@ -1,8 +1,8 @@
-package rs.dusk.core.io.read
+package rs.dusk.core.network.buffer.read
 
-import rs.dusk.core.io.DataType
-import rs.dusk.core.io.Endian
-import rs.dusk.core.io.Modifier
+import rs.dusk.core.network.buffer.DataType
+import rs.dusk.core.network.buffer.Endian
+import rs.dusk.core.network.buffer.Modifier
 import java.nio.ByteBuffer
 import kotlin.math.pow
 
@@ -128,10 +128,10 @@ open class BufferReader(override val buffer: ByteBuffer) : Reader {
         for (index in order.getRange(modifier, type.byteCount)) {
             read = buffer.get().toInt()
             read = when (if(index == 0 && order != Endian.MIDDLE) modifier else Modifier.NONE) {
-                Modifier.ADD -> read - 128 and 0xff
-                Modifier.INVERSE -> -read and 0xff
+                Modifier.ADD      -> read - 128 and 0xff
+                Modifier.INVERSE  -> -read and 0xff
                 Modifier.SUBTRACT -> 128 - read and 0xff
-                else -> read and 0xff shl index * 8
+                else              -> read and 0xff shl index * 8
             }
             longValue = longValue or read.toLong()
         }

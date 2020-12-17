@@ -1,9 +1,9 @@
-package rs.dusk.core.network.connection
+package rs.dusk.core.network
 
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelInitializer
-import io.netty.channel.ChannelPipeline
 import io.netty.channel.socket.SocketChannel
+import rs.dusk.core.network.connection.ConnectionPipeline
 import rs.dusk.core.network.connection.event.ChannelEventChain
 import rs.dusk.core.network.connection.event.ChannelEventListener
 import rs.dusk.core.network.connection.event.ChannelEventType.*

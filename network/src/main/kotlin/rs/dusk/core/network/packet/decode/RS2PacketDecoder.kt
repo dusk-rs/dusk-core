@@ -1,7 +1,7 @@
 package rs.dusk.core.network.packet.decode
 
 import io.netty.buffer.ByteBuf
-import rs.dusk.core.io.crypto.IsaacCipher
+import rs.dusk.core.network.buffer.cipher.isaac.IsaacCipher
 
 /**
  * This packet decoder decodes runescape packets which are built in this manner [opcode, length, buffer], with the opcode decryption requiring an [IsaacCipher]

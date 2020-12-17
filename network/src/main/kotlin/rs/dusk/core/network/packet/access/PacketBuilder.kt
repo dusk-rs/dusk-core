@@ -1,7 +1,7 @@
 package rs.dusk.core.network.packet.access
 
 import io.netty.buffer.ByteBuf
-import rs.dusk.core.io.crypto.IsaacCipher
+import rs.dusk.core.network.buffer.cipher.isaac.IsaacCipher
 
 /**
  * The building of a packet is done by this class

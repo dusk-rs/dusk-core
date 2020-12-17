@@ -1,4 +1,6 @@
-package rs.dusk.core.io
+package rs.dusk.core.network.buffer
+
+import rs.dusk.core.network.buffer.Modifier.INVERSE
 
 /**
  * @author Greg Hibberd <greg@greghibberd.com>
@@ -13,7 +15,7 @@ enum class Endian {
     fun getRange(modifier: Modifier, byteCount: Int) = when (this) {
         BIG -> byteCount - 1 downTo 0
         LITTLE -> 0 until byteCount
-        MIDDLE -> if (modifier == Modifier.INVERSE) MID_ENDIAN_INVERSE else MID_ENDIAN_ORDER
+        MIDDLE -> if (modifier == INVERSE) MID_ENDIAN_INVERSE else MID_ENDIAN_ORDER
     }
 
     companion object {

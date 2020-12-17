@@ -1,10 +1,10 @@
-package rs.dusk.core.io.write
+package rs.dusk.core.network.buffer.write
 
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
-import rs.dusk.core.io.DataType
-import rs.dusk.core.io.Endian
-import rs.dusk.core.io.Modifier
+import rs.dusk.core.network.buffer.DataType
+import rs.dusk.core.network.buffer.Endian
+import rs.dusk.core.network.buffer.Modifier
 
 /**
  * All functions relative to writing directly to a packet are done by this class
@@ -112,10 +112,10 @@ open class BufferWriter(
 
         for (index in order.getRange(modifier, type.byteCount)) {
             val modifiedValue = when (if (index == 0 && order != Endian.MIDDLE) modifier else Modifier.NONE) {
-                Modifier.ADD -> value.toInt() + 128
-                Modifier.INVERSE -> -value.toInt()
+                Modifier.ADD      -> value.toInt() + 128
+                Modifier.INVERSE  -> -value.toInt()
                 Modifier.SUBTRACT -> 128 - value.toInt()
-                else -> (value.toLong() shr index * 8).toInt()
+                else              -> (value.toLong() shr index * 8).toInt()
             }
             buffer.writeByte(modifiedValue)
         }

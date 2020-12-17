@@ -1,4 +1,4 @@
-package rs.dusk.core.io
+package rs.dusk.core.network.buffer
 
 /**
  * Byte Encode Modification

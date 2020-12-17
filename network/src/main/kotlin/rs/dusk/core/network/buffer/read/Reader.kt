@@ -1,8 +1,8 @@
-package rs.dusk.core.io.read
+package rs.dusk.core.network.buffer.read
 
-import rs.dusk.core.io.DataType
-import rs.dusk.core.io.Endian
-import rs.dusk.core.io.Modifier
+import rs.dusk.core.network.buffer.DataType
+import rs.dusk.core.network.buffer.Endian
+import rs.dusk.core.network.buffer.Modifier
 import java.nio.ByteBuffer
 
 /**

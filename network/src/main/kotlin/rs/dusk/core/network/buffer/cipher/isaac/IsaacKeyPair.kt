@@ -1,4 +1,4 @@
-package rs.dusk.core.io.crypto
+package rs.dusk.core.network.buffer.cipher.isaac
 
 /**
  * @author Tyluur <contact@kiaira.tech>

@@ -8,7 +8,6 @@ import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioServerSocketChannel
 import io.netty.util.concurrent.GlobalEventExecutor
-import rs.dusk.core.network.connection.Connectable
 
 /**
  * A network server is a node in the network which can be connected to by other nodes.

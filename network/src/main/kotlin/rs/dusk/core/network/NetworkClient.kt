@@ -1,6 +1,5 @@
 package rs.dusk.core.network
 
-import com.github.michaelbull.logging.InlineLogger
 import io.netty.bootstrap.Bootstrap
 import io.netty.channel.Channel
 import io.netty.channel.ChannelFuture
@@ -12,8 +11,6 @@ import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioSocketChannel
 import io.netty.util.AttributeKey
-import rs.dusk.core.network.NetworkClient.Companion.CLIENT_KEY
-import rs.dusk.core.network.connection.Connectable
 
 /**
  * A network client is a node in the network which is connected to another node.
@@ -48,8 +45,6 @@ abstract class NetworkClient(private val host : String) : Connectable {
 	 * The [future][ChannelFuture] of the connection to the server
 	 */
 	private var future : ChannelFuture? = null
-	
-	private val logger = InlineLogger()
 	
 	/**
 	 * The options used for the connection are configured here, as well as the [ChannelInitializer]

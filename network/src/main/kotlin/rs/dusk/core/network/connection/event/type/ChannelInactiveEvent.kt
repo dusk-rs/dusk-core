@@ -3,7 +3,7 @@ package rs.dusk.core.network.connection.event.type
 import com.github.michaelbull.logging.InlineLogger
 import io.netty.channel.Channel
 import io.netty.channel.ChannelHandlerContext
-import rs.dusk.core.network.connection.Connectable
+import rs.dusk.core.network.Connectable
 import rs.dusk.core.network.connection.event.ChannelEvent
 
 /**
