@@ -16,6 +16,8 @@ plugins {
     java
 }
 
+val koinVersion = "2.1.5"
+
 allprojects {
     apply(plugin = "kotlin")
     apply(plugin = "idea")
@@ -47,7 +49,10 @@ allprojects {
                 name = "kotlin-inline-logger-jvm",
                 version = "1.0.2"
         )
-
+	
+	    implementation(group = "org.koin", name = "koin-core", version = koinVersion)
+	    implementation(group = "org.koin", name = "koin-logger-slf4j", version = koinVersion)
+	    
         //Logging
         implementation("org.slf4j:slf4j-api:1.7.30")
         implementation(group = "ch.qos.logback", name = "logback-classic", version = "1.2.3")

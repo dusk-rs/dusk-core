@@ -20,6 +20,11 @@ import rs.dusk.core.network.connection.Connectable
 abstract class NetworkServer : Connectable {
 	
 	/**
+	 * If the server is running
+	 */
+	var running = false
+	
+	/**
 	 * The group of [channel][Channel]s connected
 	 */
 	private val channels = DefaultChannelGroup(GlobalEventExecutor.INSTANCE)
@@ -56,7 +61,9 @@ abstract class NetworkServer : Connectable {
 	 * The server is started by binding the server to the defined port
 	 */
 	override fun start(port : Int) : ChannelFuture = with(bootstrap) {
-		return bind(port).syncUninterruptibly()
+		val future = bind(port)
+		running = true
+		return future.syncUninterruptibly()
 	}
 	
 	/**
@@ -65,6 +72,7 @@ abstract class NetworkServer : Connectable {
 	fun shutdown() {
 		bossGroup.shutdownGracefully()
 		workerGroup.shutdownGracefully()
+		running = false
 	}
 	
 	companion object {
