@@ -22,7 +22,7 @@ allprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
 
     group = "rs.dusk.core"
-    version = "0.1.3"
+    version = "0.1.4"
 
     java.sourceCompatibility = JavaVersion.VERSION_11
 
