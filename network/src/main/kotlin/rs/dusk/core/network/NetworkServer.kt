@@ -1,6 +1,5 @@
 package rs.dusk.core.network
 
-import com.github.michaelbull.logging.InlineLogger
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.buffer.PooledByteBufAllocator
 import io.netty.channel.ChannelFuture
@@ -11,36 +10,22 @@ import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioServerSocketChannel
 import rs.dusk.core.network.connection.Connectable
-import rs.dusk.core.network.connection.ConnectionSettings
-import rs.dusk.core.network.security.SslServerInitializer
 
 /**
  * @author Tyluur <contact@kiaira.tech>
  * @since March 18, 2020
  */
-abstract class NetworkServer(
+abstract class NetworkServer : Connectable {
 	
 	/**
 	 * The event group used for the parent group
 	 */
-	private val bossGroup : EventLoopGroup = createGroup(
-		true
-	),
+	private val bossGroup : EventLoopGroup = createGroup(true)
 	
 	/**
 	 * The event group used for the child group
 	 */
-	private val workerGroup : EventLoopGroup = createGroup(
-		false
-	)
-) : Connectable {
-	
-	/**
-	 * The connection settings to use
-	 */
-	abstract val settings : ConnectionSettings
-	
-	private val logger = InlineLogger()
+	private val workerGroup : EventLoopGroup = createGroup(false)
 	
 	/**
 	 * The server bootstrap
@@ -63,11 +48,8 @@ abstract class NetworkServer(
 	/**
 	 * The server is started by binding the server to the defined port
 	 */
-	fun bind(sslInitializer : SslServerInitializer? = null) : ChannelFuture = with(bootstrap) {
-		val future = bind(settings.port).syncUninterruptibly()
-		sslInitializer?.addSslHandler(future.channel())
-		logger.info { "Network bound successfully [settings=$settings]" }
-		return future
+	fun listen(port : Int) : ChannelFuture = with(bootstrap) {
+		return bind(port).syncUninterruptibly()
 	}
 	
 	/**
