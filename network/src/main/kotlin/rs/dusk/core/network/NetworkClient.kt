@@ -82,18 +82,3 @@ abstract class NetworkClient(val host : String) : Connectable {
 		val CLIENT_KEY : AttributeKey<NetworkClient> = AttributeKey.valueOf("network.client.key")
 	}
 }
-
-/**
- * Gets the [network client][NetworkClient] attribute of a channel
- * @receiver Channel
- */
-fun Channel.getClient() : NetworkClient {
-	return attr(CLIENT_KEY).get()
-}
-
-/**
- * Sets the [network client][NetworkClient] attribute of a channel
- */
-fun Channel.setClient(client : NetworkClient) {
-	attr(CLIENT_KEY).set(client)
-}
