@@ -19,7 +19,7 @@ abstract class Codec {
 	/**
 	 * The [codec repository][CodecRepository] for this codec, which contains the collections used for codec functions.
 	 */
-	private val repository = CodecRepository()
+	val repository = CodecRepository()
 	
 	/**
 	 * The registration of all [components][CodecRepository] of this codec must be done here.
