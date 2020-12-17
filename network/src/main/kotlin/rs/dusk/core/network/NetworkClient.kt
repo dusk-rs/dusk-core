@@ -16,10 +16,13 @@ import rs.dusk.core.network.NetworkClient.Companion.CLIENT_KEY
 import rs.dusk.core.network.connection.Connectable
 
 /**
- * @author Tyluur <contact@kiaira.tech>
+ * A network client is a node in the network which is connected to another node.
+ * It cannot be connected to by another node (in this design).
+ *
+ * @author Tyluur <itstyluur@gmail.com>
  * @since March 25, 2020
  */
-abstract class NetworkClient(val host : String, val port : Int) : Connectable {
+abstract class NetworkClient(val host : String) : Connectable {
 	
 	private val logger = InlineLogger()
 	
@@ -46,7 +49,7 @@ abstract class NetworkClient(val host : String, val port : Int) : Connectable {
 	/**
 	 * The options used for the connection are configured here, as well as the [ChannelInitializer]
 	 */
-	fun configure(initializer : ChannelInitializer<SocketChannel>) = with(bootstrap) {
+	override fun configure(initializer : ChannelInitializer<SocketChannel>) = with(bootstrap) {
 		group(group)
 		channel(NioSocketChannel::class.java)
 		handler(initializer)
@@ -58,7 +61,7 @@ abstract class NetworkClient(val host : String, val port : Int) : Connectable {
 	/**
 	 * Connecting to the server
 	 */
-	fun connect() : ChannelFuture = with(bootstrap) {
+	override fun start(port : Int) : ChannelFuture = with(bootstrap) {
 		future = connect(host, port).syncUninterruptibly()
 		return future!!
 	}

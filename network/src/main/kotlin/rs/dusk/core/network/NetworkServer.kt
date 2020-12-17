@@ -11,7 +11,10 @@ import io.netty.util.concurrent.GlobalEventExecutor
 import rs.dusk.core.network.connection.Connectable
 
 /**
- * @author Tyluur <contact@kiaira.tech>
+ * A network server is a node in the network which can be connected to by other nodes.
+ * It cannot connect to other nodes (in this design).
+ *
+ * @author Tyluur <itstyluur@gmail.com>
  * @since March 18, 2020
  */
 abstract class NetworkServer : Connectable {
@@ -39,7 +42,7 @@ abstract class NetworkServer : Connectable {
 	/**
 	 * The bootstrap is configured here by preparing the worker groups then binding the relevant options
 	 */
-	fun configure(initializer : ChannelInitializer<SocketChannel>) = with(bootstrap) {
+	override fun configure(initializer : ChannelInitializer<SocketChannel>) = with(bootstrap) {
 		channel(NioServerSocketChannel::class.java)
 		option(ChannelOption.SO_BACKLOG, 25)
 		option(ChannelOption.SO_REUSEADDR, true)
@@ -52,7 +55,7 @@ abstract class NetworkServer : Connectable {
 	/**
 	 * The server is started by binding the server to the defined port
 	 */
-	fun listen(port : Int) : ChannelFuture = with(bootstrap) {
+	override fun start(port : Int) : ChannelFuture = with(bootstrap) {
 		return bind(port).syncUninterruptibly()
 	}
 	
