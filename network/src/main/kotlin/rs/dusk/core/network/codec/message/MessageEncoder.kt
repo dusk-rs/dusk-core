@@ -10,7 +10,6 @@ import kotlin.reflect.KClass
  * @author Tyluur <contact@kiaira.tech>
  * @since February 18, 2020
  */
-@ChannelHandler.Sharable
 abstract class MessageEncoder<M : Message> {
 	
 	/**

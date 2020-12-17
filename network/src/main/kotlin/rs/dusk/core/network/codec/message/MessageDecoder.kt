@@ -9,7 +9,6 @@ import java.util.*
  * @author Tyluur <contact@kiaira.tech>
  * @since February 18, 2020
  */
-@ChannelHandler.Sharable
 abstract class MessageDecoder<M : Message>(
 
     /**
