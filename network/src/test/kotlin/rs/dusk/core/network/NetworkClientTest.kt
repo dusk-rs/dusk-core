@@ -7,7 +7,10 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 
 /**
- * @author Tyluur <itstyluur></itstyluur>@gmail.com>
+ * This class creates a test network client and attempts to connect to the specified port.
+ * This provides a full test of the network client on any endpoint.
+ *
+ * @author Tyluur <itstyluur@gmail.com>
  * @since December 17, 2020
  */
 internal class NetworkClientTest {
@@ -16,7 +19,7 @@ internal class NetworkClientTest {
 	
 	@BeforeEach
 	fun setUp() {
-		example = TestClient("localhost", 43594)
+		example = TestClient("google.com", port = 80)
 	}
 	
 	@Test

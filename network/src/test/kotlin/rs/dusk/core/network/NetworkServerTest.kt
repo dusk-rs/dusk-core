@@ -6,7 +6,10 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 
 /**
- * @author Tyluur <itstyluur></itstyluur>@gmail.com>
+ * This class creates a test network server and attempts to listen on the specified port.
+ * This provides a full test of the network server listening.
+ *
+ * @author Tyluur <itstyluur@gmail.com>
  * @since December 17, 2020
  */
 internal class NetworkServerTest {
@@ -15,7 +18,7 @@ internal class NetworkServerTest {
 	
 	@BeforeEach
 	fun setUp() {
-		example = TestServer(43594)
+		example = TestServer(port = 43594)
 	}
 	
 	@Test
