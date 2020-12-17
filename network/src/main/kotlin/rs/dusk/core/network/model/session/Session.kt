@@ -29,7 +29,7 @@ abstract class Session(private val channel : Channel) {
 	}
 	
 	/**
-	 * Sending of a message via [Channel.writeAndFlush]
+	 * Send a message by [writing and flushing][Channel.writeAndFlush]
 	 */
 	fun send(msg : Any) : ChannelFuture? {
 		return channel.writeAndFlush(msg)

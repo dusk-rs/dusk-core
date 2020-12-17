@@ -15,7 +15,7 @@ import kotlin.reflect.KClass
  * @author Tyluur <contact@kiaira.tech>
  * @since February 18, 2020
  */
-open class CodecRepository {
+class NetworkCodecRepository {
 	
 	private val logger = InlineLogger()
 	

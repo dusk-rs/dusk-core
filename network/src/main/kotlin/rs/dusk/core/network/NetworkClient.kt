@@ -15,7 +15,6 @@ import io.netty.util.AttributeKey
 import rs.dusk.core.network.NetworkClient.Companion.CLIENT_KEY
 import rs.dusk.core.network.connection.Connectable
 import rs.dusk.core.network.connection.ConnectionSettings
-import rs.dusk.core.network.model.session.Session
 
 /**
  * @author Tyluur <contact@kiaira.tech>

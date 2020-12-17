@@ -11,21 +11,18 @@ import rs.dusk.core.utility.ReflectionUtils
 import kotlin.reflect.KClass
 
 /**
- * The
- *
  * @author Tyluur <itstyluur@gmail.com>
  * @since February 18, 2020
  */
 abstract class NetworkCodec {
 	
 	/**
-	 * The [codec repository][CodecRepository] for this codec, which contains the collections used for codec functions.
+	 * The [codec repository][NetworkCodecRepository] for this codec, which contains the collections used for codec functions.
 	 */
-	private val repository = CodecRepository()
+	private val repository = NetworkCodecRepository()
 	
 	/**
-	 * The registration of all [components][CodecRepository] of this codec must be done here.
-	 *
+	 * The registration of all [components][NetworkCodecRepository] of this codec must be done here.
 	 */
 	abstract fun register()
 	

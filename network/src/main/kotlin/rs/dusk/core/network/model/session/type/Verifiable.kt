@@ -11,7 +11,7 @@ package rs.dusk.core.network.model.session.type
  * @author Tyluur <contact@kiaira.tech>
  * @since April 08, 2020
  */
-interface VerifiableSession {
+interface Verifiable {
 
     /**
      * The time in ms for verification, after which [VerifiableSession#timeout()] will be invoked
