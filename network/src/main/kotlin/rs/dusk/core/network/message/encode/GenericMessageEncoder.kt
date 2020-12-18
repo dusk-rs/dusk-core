@@ -11,8 +11,10 @@ import rs.dusk.core.network.packet.access.PacketBuilder
 import rs.dusk.core.network.message.Message
 
 /**
- * Encoder for writing messages to byte data
- * @author Tyluur <contact@kiaira.tech>
+ * This class adds the capability to write generic messages (which extend the [Message][Message] class) to the channel.
+ * The encoding portion is done by introducing the requirement of an encoding class for the message, to the codec.
+ *
+ * @author Tyluur <itstyluur@gmail.com>
  * @since February 18, 2020
  */
 @ChannelHandler.Sharable
