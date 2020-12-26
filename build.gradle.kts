@@ -1,100 +1,128 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.plugin.KotlinMultiplatformPluginWrapper
 
-    dependencies {
-        classpath(kotlin("gradle-plugin", version = "1.3.71"))
-    }
-}
+val ossrhUsername: String? by ext
+val ossrhPassword: String? by ext
+
+description = "#1 rsps. no noobs allowed"
 
 plugins {
-    kotlin("jvm") version "1.3.71"
-    `maven-publish`
-    maven
-    idea
-    java
+	base
+	id("java")
+	id()
+	id("com.github.ben-manes.versions") version Versions.versionsPlugin
+	
+	kotlin("multiplatform") version Versions.kotlin apply false
+	id("kotlinx.benchmark") version Versions.kotlinBenchmark apply false
+	id("org.jetbrains.dokka") version Versions.dokka apply false
+	id("org.jetbrains.kotlin.plugin.allopen") version Versions.kotlin apply false
 }
 
-val koinVersion = "2.1.5"
+tasks.withType<DependencyUpdatesTask> {
+	rejectVersionIf {
+		listOf("alpha", "beta", "rc", "cr", "m", "eap", "pr", "dev").any {
+			candidate.version.contains(it, ignoreCase = true)
+		}
+	}
+}
 
 allprojects {
-    apply(plugin = "kotlin")
-    apply(plugin = "idea")
-    apply(plugin = "org.jetbrains.kotlin.jvm")
+	repositories {
+		mavenCentral()
+		jcenter()
+		maven("https://dl.bintray.com/kotlin/kotlinx")
+	}
+}
 
-    group = "rs.dusk.core"
-    version = "0.1.5"
-
-    java.sourceCompatibility = JavaVersion.VERSION_1_8
-
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        jcenter()
-        maven(url = "https://repo.maven.apache.org/maven2")
-        maven(url = "https://dl.bintray.com/michaelbull/maven")
-    }
-
-    dependencies {
-        //Main
-        implementation(kotlin("stdlib-jdk8"))
-        implementation(kotlin("reflect"))
-        implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = "1.3.5")
-        implementation(group = "io.netty", name = "netty-all", version = "4.1.44.Final")
-        implementation(group = "org.yaml", name = "snakeyaml", version = "1.8")
-        implementation(group = "io.github.classgraph", name = "classgraph", version = "4.6.3")
-        implementation(
-                group = "com.michael-bull.kotlin-inline-logger",
-                name = "kotlin-inline-logger-jvm",
-                version = "1.0.2"
-        )
-	
-	    implementation(group = "org.koin", name = "koin-core", version = koinVersion)
-	    implementation(group = "org.koin", name = "koin-logger-slf4j", version = koinVersion)
-	    
-        //Logging
-        implementation("org.slf4j:slf4j-api:1.7.30")
-        implementation(group = "ch.qos.logback", name = "logback-classic", version = "1.2.3")
-
-        //Utilities
-        implementation(group = "com.google.guava", name = "guava", version = "19.0")
-        implementation(group = "org.apache.commons", name = "commons-lang3", version = "3.0")
-
-        //Testing
-        testImplementation(group = "org.junit.jupiter", name = "junit-jupiter-api", version = "5.5.2")
-	    testImplementation(group = "org.koin", name = "koin-test", version = koinVersion)
-
-    }
-
-    tasks {
-        compileKotlin {
-            kotlinOptions.jvmTarget = "1.8"
-        }
-        compileTestKotlin {
-            kotlinOptions.jvmTarget = "1.8"
-        }
-    }
-
-    apply(plugin = "maven-publish")
-    val sourcesJar by tasks.registering(Jar::class) {
-        archiveClassifier.set("sources")
-        from(sourceSets.getByName("main").java.srcDirs)
-    }
-
-    artifacts {
-        archives(sourcesJar.get())
-    }
-
-    publishing {
-        repositories {
-            mavenLocal()
-        }
-        publications {
-            register("mavenJava", MavenPublication::class) {
-                from(components["java"])
-                artifact(sourcesJar.get())
-            }
-        }
-    }
+subprojects {
+	plugins.withType<MavenPublishPlugin> {
+		apply(plugin = "org.gradle.signing")
+		
+		plugins.withType<KotlinMultiplatformPluginWrapper> {
+			apply(plugin = "org.jetbrains.dokka")
+			
+			val dokka by tasks.existing(DokkaTask::class) {
+				outputFormat = "javadoc"
+				outputDirectory = "$buildDir/docs/javadoc"
+			}
+			
+			val javadocJar by tasks.registering(Jar::class) {
+				group = LifecycleBasePlugin.BUILD_GROUP
+				description = "Assembles a jar archive containing the Javadoc API documentation."
+				archiveClassifier.set("javadoc")
+				dependsOn(dokka)
+				from(dokka.get().outputDirectory)
+			}
+			
+			configure<KotlinMultiplatformExtension> {
+				explicitApi()
+				
+				jvm {
+					mavenPublication {
+						artifact(javadocJar.get())
+					}
+				}
+				
+				js {
+					browser()
+					nodejs()
+				}
+			}
+		}
+		
+		configure<PublishingExtension> {
+			repositories {
+				maven {
+					if (project.version.toString().endsWith("SNAPSHOT")) {
+						setUrl("https://oss.sonatype.org/content/repositories/snapshots")
+					} else {
+						setUrl("https://oss.sonatype.org/service/local/staging/deploy/maven2")
+					}
+					
+					credentials {
+						username = ossrhUsername
+						password = ossrhPassword
+					}
+				}
+			}
+			
+			publications.withType<MavenPublication> {
+				pom {
+					name.set(project.name)
+					url.set("https://github.com/dusk-rs/dusk-core")
+					inceptionYear.set("2020)
+					
+					developers {
+						developer {
+							name.set("Tyluur")
+							url.set("dusk.rs/tyluur")
+						}
+					}
+					
+					scm {
+						connection.set("scm:git:https://github.com/dusk-rs/dusk-core")
+						developerConnection.set("scm:git:git@github.com:dusk-rs/dusk-core.git")
+						url.set("https://github.com/dusk-rs/dusk-core")
+					}
+					
+					issueManagement {
+						system.set("GitHub")
+						url.set("https://github.com/dusk-rs/dusk-core/issues")
+					}
+					
+					ciManagement {
+						system.set("GitHub")
+						url.set("https://github.com/dusk-rs/dusk-core/actions?query=workflow%3Aci")
+					}
+				}
+			}
+			
+			configure<SigningExtension> {
+				useGpgCmd()
+				sign(publications)
+			}
+		}
+	}
 }
