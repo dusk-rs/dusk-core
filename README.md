@@ -18,10 +18,10 @@ You must have gradle installed on your machine, as well as maven. The core modul
 Gradle (kts)
 
 ```kotlin
-val duskCoreVersion = "0.1.5"
+val duskCoreVersion = "1.0.0"
 
 repositories {
-    mavenLocal()
+	mavenCentral()
 }
 	
 implementation(group = "rs.dusk.core", name = "network", version = duskCoreVersion)
@@ -62,7 +62,9 @@ In order to access this library on your machine, it must be built and published 
 In the terminal relevant to this project, run this command. 
 
 ```sh
-gradle build publishToMavenLocal
+gradle build
+gradle public
+gradle run
 ```
 
 You should see output such as:
