@@ -24,8 +24,7 @@ repositories {
 	mavenCentral()
 }
 	
-implementation(group = "rs.dusk.core", name = "network", version = duskCoreVersion)
-implementation(group = "rs.dusk.core", name = "utility", version = duskCoreVersion)
+implementation(group = "dusk.rs", name = "core", version = duskCoreVersion)
 ````
 
 ## Example
