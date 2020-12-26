@@ -7,6 +7,18 @@ val junitVersion = "5.6.2"
 val exposedVersion = "0.24.1"
 val jacksonVersion = "2.11.0"
 
+repositories {
+	mavenCentral()
+	jcenter()
+	maven("https://dl.bintray.com/kotlin/kotlinx")
+	maven {
+		// change URLs to point to your repos, e.g. http://my.org/repo
+		val releasesRepoUrl = uri("$buildDir/repos/releases")
+		val snapshotsRepoUrl = uri("$buildDir/repos/snapshots")
+		url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
+	}
+}
+
 plugins {
 	kotlin("jvm") version "1.4.21"
 	application
@@ -16,9 +28,6 @@ plugins {
 	maven
 	java
 	signing
-	kotlin("js")
-	kotlin("serialization")
-	kotlin("org.jetbrains.kotlin.frontend")
 	base
 }
 
@@ -37,18 +46,6 @@ buildscript {
 allprojects {
 	apply(plugin = "idea")
 	apply(plugin = "org.jetbrains.kotlin.jvm")
-	
-	repositories {
-		mavenCentral()
-		jcenter()
-		maven("https://dl.bintray.com/kotlin/kotlinx")
-		maven {
-			// change URLs to point to your repos, e.g. http://my.org/repo
-			val releasesRepoUrl = uri("$buildDir/repos/releases")
-			val snapshotsRepoUrl = uri("$buildDir/repos/snapshots")
-			url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
-		}
-	}
 	
 	dependencies {
 		//Main
