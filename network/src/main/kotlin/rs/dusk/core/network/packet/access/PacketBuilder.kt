@@ -18,6 +18,7 @@ class PacketBuilder(private val cipher : IsaacCipher? = null, private val sized 
 		build(writer)
 		if (sized) {
 			writer.writeSize()
+			
 		}
 	}
 	

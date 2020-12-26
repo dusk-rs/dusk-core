@@ -18,12 +18,13 @@ import rs.dusk.core.network.message.Message
  * @since February 18, 2020
  */
 @ChannelHandler.Sharable
-class GenericMessageEncoder(
+class GenericMessageEncoder : MessageToByteEncoder<Message>() {
+	
 	/**
+	 *
 	 * The packet builder instance
 	 */
 	private val builder : PacketBuilder = PacketBuilder()
-) : MessageToByteEncoder<Message>() {
 	
 	private val logger = InlineLogger()
 	

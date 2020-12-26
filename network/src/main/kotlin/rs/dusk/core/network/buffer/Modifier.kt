@@ -7,8 +7,20 @@ package rs.dusk.core.network.buffer
  * @since February 18, 2020
  */
 enum class Modifier {
-    NONE,
-    ADD,
-    INVERSE,
-    SUBTRACT;
+	NONE,
+	
+	/**
+	 * Add 128 to the byte (value + 2^7)
+	 */
+	ADD,
+	
+	/**
+	 * Writes the inverse value of the byte (0 - value)
+	 */
+	INVERSE,
+	
+	/**
+	 * Subtract 128 from the byte (value + 2^7)
+	 */
+	SUBTRACT;
 }
