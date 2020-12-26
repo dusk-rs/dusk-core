@@ -11,7 +11,7 @@ The network core can be used for any network server or client which wishes to us
 
 ## Requirements
 
-You must have gradle installed on your machine, as well as maven. The core modules are built into your maven local repository.
+You must have gradle installed on your machine, as well as maven.
 
 ## Implementation
 
