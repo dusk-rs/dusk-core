@@ -1,4 +1,4 @@
-version = "1"
+version = "1.0-SNAPSHOT"
 
 val duskCoreVersion = "1.0.0"
 val javaVer = JavaVersion.VERSION_15
@@ -51,17 +51,17 @@ allprojects {
 		implementation(kotlin("stdlib-jdk8"))
 		implementation(kotlin("reflect"))
 		implementation("io.netty:netty-all:4.1.44.Final")
-		implementation(group = "com.displee", name = "rs-cache-library", version = "6.4")
-		implementation(group = "org.yaml", name = "snakeyaml", version = "1.26")
-		implementation(group = "io.github.classgraph", name = "classgraph", version = "4.8.78")
+		implementation("com.displee", name = "rs-cache-library", version = "6.4")
+		implementation("org.yaml", name = "snakeyaml", version = "1.26")
+		implementation("io.github.classgraph", name = "classgraph", version = "4.8.78")
 		implementation(
-			group = "com.michael-bull.kotlin-inline-logger",
+			"com.michael-bull.kotlin-inline-logger",
 			name = "kotlin-inline-logger-jvm",
 			version = "1.0.2"
 		)
-		implementation(group = "org.koin", name = "koin-core", version = koinVersion)
-		implementation(group = "org.koin", name = "koin-logger-slf4j", version = koinVersion)
-		implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = "1.3.7")
+		implementation("org.koin", name = "koin-core", version = koinVersion)
+		implementation("org.koin", name = "koin-logger-slf4j", version = koinVersion)
+		implementation("org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = "1.3.7")
 		
 		//Logging
 		implementation("org.slf4j:slf4j-api:1.7.30")
@@ -83,8 +83,8 @@ allprojects {
 		//Testing
 		testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
 		testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
-		testImplementation(group = "org.koin", name = "koin-test", version = koinVersion)
-		testImplementation(group = "io.mockk", name = "mockk", version = "1.10.0")
+		testImplementation("org.koin", name = "koin-test", version = koinVersion)
+		testImplementation("io.mockk", name = "mockk", version = "1.10.0")
 		testImplementation("org.jetbrains.kotlin:kotlin-test")
 		testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
 	}
@@ -137,7 +137,7 @@ allprojects {
 	publishing {
 		publications {
 			create<MavenPublication>("mavenJava") {
-				artifactId = "my-library"
+				artifactId = "dusk.rs"
 				from(components["java"])
 				versionMapping {
 					usage("java-api") {
@@ -150,7 +150,7 @@ allprojects {
 				pom {
 					name.set("Dusk")
 					description.set("A concise description of my library")
-					url.set("http://www.dusk.rs")
+					url.set("https://dusk.rs")
 					properties.set(
 						mapOf(
 							"1337" to "true",
@@ -160,13 +160,13 @@ allprojects {
 					licenses {
 						license {
 							name.set("The Apache License, Version 2.0")
-							url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+							url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
 						}
 					}
 					developers {
 						developer {
 							id.set("tyluur")
-							email.set("itstyluur@violated.rs")
+							email.set("itstyluur@icloud.com")
 						}
 					}
 					scm {
@@ -187,5 +187,5 @@ allprojects {
 	
 }
 
-group = "dusk.rs"
+"dusk.rs"
 description = "#1 rsps. no noobs allowed"
