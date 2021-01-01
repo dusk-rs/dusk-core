@@ -1,8 +1,4 @@
-
 # Dusk Core
-[![Maven Central](https://img.shields.io/maven-central/v/dusk-rs/dusk-core/maven-central.svg)](https://search.maven.org/search?q=g:dusk-rs/dusk-core)
-[![CI Status](https://github.com/dusk-rs/dusk-core/workflows/ci/badge.svg)](https://github.com/dusk-rs/dusk-core/actions?query=workflow%3Aci)
-[![License](https://img.shields.io/github/license/dusk-rs/dusk-core.svg)](https://github.com/dusk-rs/dusk/blob/master/LICENSE)
 -- --
 
 The dusk core is a multi application library. 
@@ -21,7 +17,7 @@ Gradle (kts)
 val duskCoreVersion = "1.0.0"
 
 repositories {
-	mavenCentral()
+	mavenLocal()
 }
 	
 implementation(group = "dusk.rs", name = "core", version = duskCoreVersion)

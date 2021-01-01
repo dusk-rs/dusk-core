@@ -1,1 +1,1 @@
-rootProject.name = "dusk-core"
+rootProject.name = "core"
