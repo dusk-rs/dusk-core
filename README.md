@@ -1,70 +1,19 @@
-# Dusk Core
--- --
+# Dusk Shared Core
 
-The dusk core is a multi application library. 
+A highly functioning runescape private server core which provides additional network security, additional pipeline management, and more.
 
-The network core can be used for any network server or client which wishes to use the netty network library as well as object oriented design for the network pipeline.
+[![revision][rev-badge]][patch] [![license][license-badge]][isc] [![chat][discord-badge]][discord]
 
-## Requirements
+[isc]: https://opensource.org/licenses/isc
+[license]: https://github.com/rsmod/rsmod/blob/master/LICENSE.md
+[discord]: https://discord.gg/Nv692APkVk
+[patch]: https://oldschool.runescape.wiki/w/Update:God_Wars_Instancing_and_Soul_Wars_Improvements
+[rev-badge]: https://img.shields.io/badge/revision-667-important
+[license-badge]: https://img.shields.io/badge/license-ISC-informational
+[discord-badge]: https://img.shields.io/discord/238151952121331712?color=%237289da&logo=discord
 
-You must have gradle installed on your machine, as well as maven.
+---
+All modules in Dusk that use internal/external network connections, excluding the client, are dependent upon this project.
 
-## Implementation
-
-Gradle (kts)
-
-```kotlin
-val duskCoreVersion = "1.0.0"
-
-repositories {
-	mavenLocal()
-}
-	
-implementation(group = "dusk.rs", name = "core", version = duskCoreVersion)
-````
-
-## Example
-
-### Server
-
-```kotlin
-class TestServer(private val port : Int) : NetworkServer() {
-	
-	override fun listen() {
-		configureDefault()
-		start(port)
-	}
-		
-}
-```
-
-### Client
-
-```kotlin
-class TestClient(host : String, private val port : Int) : NetworkClient(host) {
-
-	override fun connect() {
-		configureDefault()
-		start(port)
-	}
-
-}
-```
-
-## Setup
-
-In order to access this library on your machine, it must be built and published to your maven local repository.
-In the terminal relevant to this project, run this command. 
-
-```sh
-gradle build
-gradle public
-gradle run
-```
-
-You should see output such as:
-
-```sh
-BUILD SUCCESSFUL in 5s
-23 actionable tasks: 23 executed
-````
+# Setup
+`gradle build publishToMavenLocal`
