@@ -1,9 +1,9 @@
 package rs.dusk.core.network
 
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 
 /**
  * This class creates a test network server and attempts to listen on the specified port.
@@ -23,7 +23,7 @@ internal class NetworkServerTest {
 	
 	@Test
 	fun start() {
-		example.configureDefault()
+		example.listen()
 		assertTrue(example.running)
 	}
 	
@@ -40,6 +40,5 @@ class TestServer(private val port : Int) : NetworkServer() {
 		configureDefault()
 		start(port)
 	}
-	
-	
+
 }

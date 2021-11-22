@@ -16,16 +16,17 @@ plugins {
     java
 }
 
+val koinVersion = "2.2.1"
+
 allprojects {
     apply(plugin = "kotlin")
     apply(plugin = "idea")
     apply(plugin = "org.jetbrains.kotlin.jvm")
 
-
     group = "rs.dusk.core"
     version = "1.0.0"
 
-    java.sourceCompatibility = JavaVersion.VERSION_11
+    java.sourceCompatibility = JavaVersion.VERSION_17
 
     repositories {
         mavenLocal()
@@ -44,9 +45,9 @@ allprojects {
         implementation(group = "org.yaml", name = "snakeyaml", version = "1.8")
         implementation(group = "io.github.classgraph", name = "classgraph", version = "4.6.3")
         implementation(
-                group = "com.michael-bull.kotlin-inline-logger",
-                name = "kotlin-inline-logger-jvm",
-                version = "1.0.2"
+            group = "com.michael-bull.kotlin-inline-logger",
+            name = "kotlin-inline-logger-jvm",
+            version = "1.0.2"
         )
 
         //Logging
@@ -56,9 +57,12 @@ allprojects {
         //Utilities
         implementation(group = "com.google.guava", name = "guava", version = "19.0")
         implementation(group = "org.apache.commons", name = "commons-lang3", version = "3.0")
+        implementation(group = "org.koin", name = "koin-core", version = koinVersion)
+        implementation(group = "org.koin", name = "koin-logger-slf4j", version = koinVersion)
 
         //Testing
         testImplementation(group = "org.junit.jupiter", name = "junit-jupiter-api", version = "5.5.2")
+        testImplementation(group = "org.koin", name = "koin-test", version = koinVersion)
 
     }
 
