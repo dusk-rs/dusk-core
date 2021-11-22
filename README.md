@@ -2,7 +2,7 @@
 
 A highly functioning runescape private server core which provides additional network security, additional pipeline management, and more.
 
-[![revision][rev-badge]][patch] [![license][license-badge]][isc] [![chat][discord-badge]][discord]
+[![revision][rev-badge]][patch] [![license][license-badge]][isc]
 
 [isc]: https://opensource.org/licenses/isc
 [license]: https://github.com/rsmod/rsmod/blob/master/LICENSE.md
